@@ -7,7 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ctApiApplication</RootNamespace>
     <AssemblyName>ctApiApplication</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <TargetFrameworkProfile />
   </PropertyGroup>

@@ -3,3 +3,5 @@ ctApiApplication/bin/**
 ctApiWrapper/obj/**
 ctApiApplication/obj/**
 ctApiWrapper/bin/**
+ctApiWrapperTest/bin/**
+ctApiWrapperTest/obj/**
