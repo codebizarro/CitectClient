@@ -1,0 +1,5 @@
+syntax: glob
+ctApiApplication/bin/**
+ctApiWrapper/obj/**
+ctApiApplication/obj/**
+ctApiWrapper/bin/**
