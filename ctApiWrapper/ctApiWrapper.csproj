@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>ctApiWrapper</RootNamespace>
     <AssemblyName>ctApiWrapper</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <TargetFrameworkProfile />
   </PropertyGroup>

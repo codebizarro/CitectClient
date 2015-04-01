@@ -1,5 +1,6 @@
 ﻿using System;
 using ctApiWrapper;
+using System.Globalization;
 
 namespace ctApiApplication
 {
@@ -7,15 +8,19 @@ namespace ctApiApplication
     {
         public static void Main(string[] args)
         {
+            CultureInfo customCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
             CitectApi ct = new CitectApi("192.168.22.141", "kernel", "citect", 0);
             while (true)
             {
                 ct.Connected = true;
-                TimeSpan ts = TimeSpan.FromSeconds(int.Parse(ct.TagRead("Acc_N1_rb")));
-                Console.Write("{0:D2}:{1:D2}:{2:D2}", ts.Hours, ts.Minutes, ts.Seconds);
+                string s = ct.TagRead("SEC15_REG_W1_M151_PV");
+                float f = float.Parse(s);
+                Console.Write("{0:F2}", f);
                 ct.Connected = false;
                 Console.CursorLeft = 0;
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(100);
                 //Console.Clear();
             }
             Console.ReadKey(true);
