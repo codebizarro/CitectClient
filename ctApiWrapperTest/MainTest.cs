@@ -9,54 +9,41 @@ namespace ctApiWrapperTest
     public class MainTest
     {
         string host = "192.168.22.141";
-        string user = "kernel";
-        string pass = "citect";
-        int stressCount = 10;
-        string tag = "SEC15_REG_W1_M151_PV";
+        string user = "kia";
+        string pass = "kia";
+        int stressCount = 1;
+        string tagRead = "SEC15_REG_W1_M151_PV";
+        string tagWrite = "DummyStr";
+        CitectApi api;
 
         public MainTest()
         {
             CultureInfo customCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
             System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+            api = new CitectApi(host, user, pass, 0);
         }
 
         [TestMethod]
         public void Connection()
         {
-            CitectApi ct = new CitectApi(host, user, pass, 0);
-            Assert.IsFalse(ct.Connected);
-            ct.Connected = true;
-            Assert.IsTrue(ct.Connected);
-            ct.Connected = false;
-            Assert.IsFalse(ct.Connected);
+            Assert.IsFalse(api.Connected);
+            api.Open();
+            Assert.IsTrue(api.Connected);
+            api.Close();
+            Assert.IsFalse(api.Connected);
         }
 
         [TestMethod]
         public void OpenClose()
         {
-            CitectApi ct = new CitectApi(host, user, pass, 0);
             for (int i = 0; i < stressCount; ++i)
             {
-                Assert.IsFalse(ct.Connected);
-                ct.Connected = true;
-                Assert.IsTrue(ct.Connected);
-                ct.Connected = false;
-                Assert.IsFalse(ct.Connected);
-            }
-        }
-
-        [TestMethod]
-        public void CreateWrapper()
-        {
-            for (int i = 0; i < stressCount; ++i)
-            {
-                CitectApi ct = new CitectApi(host, user, pass, 0);
-                Assert.IsFalse(ct.Connected);
-                ct.Connected = true;
-                Assert.IsTrue(ct.Connected);
-                ct.Connected = false;
-                Assert.IsFalse(ct.Connected);
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                api.Close();
+                Assert.IsFalse(api.Connected);
             }
         }
 
@@ -65,15 +52,35 @@ namespace ctApiWrapperTest
         {
             for (int i = 0; i < stressCount; ++i)
             {
-                CitectApi ct = new CitectApi(host, user, pass, 0);
-                Assert.IsFalse(ct.Connected);
-                ct.Connected = true;
-                Assert.IsTrue(ct.Connected);
-                string s = ct.TagRead(tag);
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                string s = api.TagRead(tagRead);
                 Assert.IsNotNull(s);
                 float f = float.Parse(s);
-                ct.Connected = false;
-                Assert.IsFalse(ct.Connected);
+                api.Close();
+                Assert.IsFalse(api.Connected);
+            }
+        }
+
+        [TestMethod]
+        public void Write()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                string s = api.TagRead(tagWrite);
+                Assert.IsNotNull(s);
+                string sTest = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+                api.TagWrite(tagWrite, sTest);
+                string sTemp = api.TagRead(tagWrite);
+                Assert.IsNotNull(sTemp);
+                Assert.AreEqual(sTest, sTemp);
+                api.TagWrite(tagWrite, s);
+                api.Close();
+                Assert.IsFalse(api.Connected);
             }
         }
     }
