@@ -6,124 +6,37 @@ using System.ComponentModel;
 
 namespace ctApiWrapper
 {
-    /// <summary>
-    ///
-    /// </summary>
-    public class CitectApi
+    public class CitectApi : IDisposable
     {
-        #region Fields
-        private string FComputer;
-        private string FUser;
-        private string FPassword;
-        private uint FMode;
-        private IntPtr FhCtapi;
-        #endregion
         #region Constructors
         public CitectApi()
         {
 
         }
-        public CitectApi(string Computer, string User, string Password, uint Mode)
+        public CitectApi(string host, string user, string password, uint mode)
         {
-            this.Computer = Computer;
-            this.User = User;
-            this.Password = Password;
-            this.Mode = Mode;
+            Host = host;
+            User = user;
+            Password = password;
+            Mode = mode;
         }
         #endregion
         #region Properties
-        public string Computer
-        {
-            get
-            {
-                return FComputer;
-            }
-            set
-            {
-                FComputer = value;
-            }
-        }
+        public string Host { get; private set; }
 
-        public string User
-        {
-            get
-            {
-                return FUser;
-            }
-            set
-            {
-                FUser = value;
-            }
-        }
+        public string User { get; private set; }
 
-        private string Password
-        {
-            get
-            {
-                return FPassword;
-            }
-            set
-            {
-                FPassword = value;
-            }
-        }
+        private string Password { get; set; }
 
-        public uint Mode
-        {
-            get
-            {
-                return FMode;
-            }
-            set
-            {
-                FMode = value;
-            }
-        }
+        private uint Mode { get; set; }
 
-        private IntPtr hCtapi
-        {
-            get
-            {
-                return FhCtapi;
-            }
-            set
-            {
-                FhCtapi = value;
-            }
-        }
+        private IntPtr hCtapi { get; set; }
 
         public bool Connected
         {
             get
             {
                 return IsConnected();
-            }
-            set
-            {
-                if (true == value)
-                {
-                    if (IsConnected())
-                    {
-                        ctClose(hCtapi);
-                        hCtapi = (IntPtr)0;
-                    }
-                    hCtapi = ctOpen(Computer, User, Password, Mode);
-                    int lastError = Marshal.GetLastWin32Error();
-                    if (lastError != 0)
-                    {
-                        throw new Exception(new Win32Exception(lastError).Message);
-                    }
-                }
-                else
-                {
-                    ctClose(hCtapi);
-                    int lastError = Marshal.GetLastWin32Error();
-                    if (lastError != 0)
-                    {
-                        throw new Exception(new Win32Exception(lastError).Message);
-                    }
-                    hCtapi = (IntPtr)0;
-                }
             }
         }
         #endregion
@@ -167,8 +80,34 @@ namespace ctApiWrapper
                 throw new Exception(new Win32Exception(lastError).Message);
             }
         }
+
+        public void Open()
+        {
+            if (IsConnected())
+            {
+                ctClose(hCtapi);
+                hCtapi = IntPtr.Zero;
+            }
+            hCtapi = ctOpen(Host, User, Password, Mode);
+            int lastError = Marshal.GetLastWin32Error();
+            if (lastError != 0)
+            {
+                throw new Exception(new Win32Exception(lastError).Message);
+            }
+        }
+
+        public void Close()
+        {
+            ctClose(hCtapi);
+            int lastError = Marshal.GetLastWin32Error();
+            if (lastError != 0)
+            {
+                throw new Exception(new Win32Exception(lastError).Message);
+            }
+            hCtapi = IntPtr.Zero;
+        }
         #endregion
-        #region External imports
+        #region External imports DLL
         [DllImport("ctapi.dll", EntryPoint = "ctOpen", SetLastError = true, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true)]
         private static extern IntPtr ctOpen(string sComputer, string sUser, string sPassword, uint nMode);
 
@@ -183,6 +122,43 @@ namespace ctApiWrapper
 
         [DllImport("ctapi.dll", EntryPoint = "ctCicode", SetLastError = true, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true)]
         private static extern IntPtr ctCicode(IntPtr hCTAPI, string sCmd, uint hWin, uint nMode, [MarshalAs(UnmanagedType.LPStr)] StringBuilder sResult, uint dwLength, uint pctOverlapped);
+
+        [DllImport("ctapi.dll", EntryPoint = "ctFindFirst", SetLastError = true, CharSet = CharSet.Ansi, ThrowOnUnmappableChar = true)]
+        private static extern IntPtr ctFindFirst(IntPtr hCtapi, string szTableName, string szFilter, out uint pObjHnd, uint dwFlags = 0);
+
+        [System.Runtime.InteropServices.DllImport("Kernel32")]
+        private extern static Boolean CloseHandle(IntPtr handle);
+
+        #endregion
+
+        #region IDisposable
+        private bool disposed = false;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    //component.Dispose();
+                }
+                //CloseHandle(handle);
+                ctClose(hCtapi);
+                hCtapi = IntPtr.Zero;
+                disposed = true;
+            }
+        }
+
+        ~CitectApi()
+        {
+            Dispose(false);
+        }
         #endregion
     }
 }
