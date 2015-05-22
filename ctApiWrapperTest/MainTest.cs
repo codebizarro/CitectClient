@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ctApiWrapper;
 using System.Globalization;
+using System.Linq;
+using System.Collections;
 
 namespace ctApiWrapperTest
 {
@@ -64,6 +66,21 @@ namespace ctApiWrapperTest
         }
 
         [TestMethod]
+        public void ReadStatus()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                string s = api.TagRead(tagRead + ".Status");
+                Assert.IsNotNull(s);
+                api.Close();
+                Assert.IsFalse(api.Connected);
+            }
+        }
+
+        [TestMethod]
         public void Write()
         {
             for (int i = 0; i < stressCount; ++i)
@@ -82,6 +99,92 @@ namespace ctApiWrapperTest
                 api.Close();
                 Assert.IsFalse(api.Connected);
             }
+        }
+
+        [TestMethod]
+        public void FindFirst()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                uint obj;
+                int hFind = api.FindFirst(TableName.Trend, "*", out obj);
+                Assert.IsTrue(hFind > 0);
+                int closeRet = api.FindClose(hFind);
+                Assert.IsTrue(closeRet != 0);
+                api.Close();
+                Assert.IsFalse(api.Connected);
+            }
+        }
+
+        [TestMethod]
+        public void GetAllTags()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                uint obj;
+                int hFind = api.FindFirst(TableName.Tag, "*", out obj);
+                Assert.IsTrue(hFind > 0);
+                ArrayList lst = new ArrayList();
+                do
+                {
+                    string tag = api.GetProperty(obj, "Tag", DbType.DBTYPE_STR);
+                    string s = api.GetProperty(obj, "FullName", DbType.DBTYPE_STR);
+                    lst.Add(tag + " - " + s);
+                } while (api.FindNext(hFind, out obj) != 0);
+
+
+                int closeRet = api.FindClose(hFind);
+                Assert.IsTrue(closeRet != 0);
+                api.Close();
+                Assert.IsFalse(api.Connected);
+            }
+        }
+
+        [TestMethod]
+        public void GetAllTrends()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                uint obj;
+                int hFind = api.FindFirst(TableName.Trend, "*", out obj);
+                Assert.IsTrue(hFind > 0);
+                ArrayList lst = new ArrayList();
+                do
+                {
+                    string tag = api.GetProperty(obj, "TAG", DbType.DBTYPE_STR);
+                    string s = api.GetProperty(obj, "SAMPLEPER", DbType.DBTYPE_STR);
+                    lst.Add(tag + " - " + s);
+                    //api.Debug = s;
+                } while (api.FindNext(hFind, out obj) != 0);
+
+
+                int closeRet = api.FindClose(hFind);
+                Assert.IsTrue(closeRet != 0);
+                api.Close();
+                Assert.IsFalse(api.Connected);
+            }
+        }
+
+        //[TestMethod]
+        public void Linq()
+        {
+            var a = new[] { new { date = "18.05.2015 00:00:05", val = 4 }, new { date = "18.05.2015 00:00:10", val = 1 } };
+
+            var q1 = from n in a
+                     orderby n.date
+                     select DateTime.Parse(n.date);
+            var q2 = a.OrderBy(n => n.date).Select(m => DateTime.Parse(m.date));
+            
+            Assert.IsTrue(q1.Except(q2).ToArray().Length == 0);
         }
     }
 }
