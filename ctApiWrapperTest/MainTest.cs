@@ -120,6 +120,39 @@ namespace ctApiWrapperTest
         }
 
         [TestMethod]
+        public void FindScroll()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                uint obj, obj1, obj2;
+                int hFind = api.FindFirst(TableName.Trend, "*", out obj);
+                Assert.IsTrue(hFind > 0);
+                api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_LAST, 0, out obj1);
+                api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_FIRST, 0, out obj2);
+                api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_LAST, 0, out obj2);
+                Assert.AreEqual(obj1, obj2);
+                api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_PREV, 0, out obj1);
+                api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_PREV, 0, out obj2);
+                api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_NEXT, 0, out obj2);
+                Assert.AreEqual(obj1, obj2);
+                api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_RELATIVE, -1, out obj1);
+                api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_RELATIVE, -1, out obj2);
+                api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_RELATIVE, 1, out obj2);
+                Assert.AreEqual(obj1, obj2);
+                api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_ABSOLUTE, 2, out obj1);
+                api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_ABSOLUTE, 2, out obj2);
+                Assert.AreEqual(obj1, obj2);
+                int closeRet = api.FindClose(hFind);
+                Assert.IsTrue(closeRet != 0);
+                api.Close();
+                Assert.IsFalse(api.Connected);
+            }
+        }
+
+        [TestMethod]
         public void GetAllTags()
         {
             for (int i = 0; i < stressCount; ++i)
@@ -166,6 +199,39 @@ namespace ctApiWrapperTest
                     //api.Debug = s;
                 } while (api.FindNext(hFind, out obj) != 0);
 
+
+                int closeRet = api.FindClose(hFind);
+                Assert.IsTrue(closeRet != 0);
+                api.Close();
+                Assert.IsFalse(api.Connected);
+            }
+        }
+
+        //[TestMethod]
+        public void CheckTrendsEqTags()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                uint obj;
+                int hFind = api.FindFirst(TableName.Trend, "*", out obj);
+                Assert.IsTrue(hFind > 0);
+                ArrayList lst = new ArrayList();
+                do
+                {
+                    string tag = api.GetProperty(obj, "TAG", DbType.DBTYPE_STR);
+                    string trendComment = api.GetProperty(obj, "COMMENT", DbType.DBTYPE_STR);
+                    uint tobj;
+                    int tFind = api.FindFirst(TableName.Tag, tag, out tobj);
+                    if (tobj > 0)
+                    {
+                        string tagComment = api.GetProperty(tobj, "COMMENT", DbType.DBTYPE_STR);
+                        Assert.AreEqual(trendComment, tagComment);
+                    }
+
+                } while (api.FindNext(hFind, out obj) != 0);
 
                 int closeRet = api.FindClose(hFind);
                 Assert.IsTrue(closeRet != 0);
