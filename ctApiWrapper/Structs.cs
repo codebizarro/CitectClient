@@ -30,7 +30,7 @@ namespace ctApiWrapper
         {
             get
             {
-                return float.Parse(val);
+                return val.ToFloat();
             }
         }
 

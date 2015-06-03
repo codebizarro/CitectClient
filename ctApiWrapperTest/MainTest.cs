@@ -21,9 +21,6 @@ namespace ctApiWrapperTest
 
         public MainTest()
         {
-            CultureInfo customCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-            customCulture.NumberFormat.NumberDecimalSeparator = ",";
-            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
             api = new CitectApi(host, user, pass, 0);
         }
 
@@ -60,7 +57,7 @@ namespace ctApiWrapperTest
                 Assert.IsTrue(api.Connected);
                 string s = api.TagRead(tagRead);
                 Assert.IsNotNull(s);
-                float f = float.Parse(s);
+                float f = s.ToFloat();
                 api.Close();
                 Assert.IsFalse(api.Connected);
             }

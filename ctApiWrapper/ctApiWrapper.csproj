@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="ctApiWrapperClass.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Native.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
