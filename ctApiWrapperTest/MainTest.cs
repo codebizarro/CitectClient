@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace ctApiWrapperTest
 {
     [TestClass]
-    public class MainTest
+    public class MainTest: IDisposable
     {
         string host = "192.168.22.141";
         string user = "kia";
@@ -211,10 +211,10 @@ namespace ctApiWrapperTest
             Assert.IsFalse(api.Connected);
             api.Open();
             Assert.IsTrue(api.Connected);
-            DateTime start = DateTime.Parse("03.06.2015 11:02:00");
+            DateTime start = DateTime.Parse("02.07.2014 03:05:00");
             List<TrendEntry> res1 = api.TrendRead(tagRead, start, 30);
             Assert.IsTrue(res1.Count > 0);
-            List<TrendEntry> res2 = api.TrendRead(tagRead, start, start.AddMinutes(-5));
+            List<TrendEntry> res2 = api.TrendRead(tagRead, start, start.AddMinutes(-50));
             Assert.IsTrue(res2.Count > 0);
             api.Close();
             Assert.IsFalse(api.Connected);
@@ -262,8 +262,36 @@ namespace ctApiWrapperTest
                      orderby n.date
                      select DateTime.Parse(n.date);
             var q2 = a.OrderBy(n => n.date).Select(m => DateTime.Parse(m.date));
-            
+
             Assert.IsTrue(q1.Except(q2).ToArray().Length == 0);
         }
+
+        #region IDisposable
+        private bool disposed = false;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    //component.Dispose();
+                    api.Dispose();
+                }
+                disposed = true;
+            }
+        }
+
+        ~MainTest()
+        {
+            Dispose(false);
+        }
+        #endregion
     }
 }
