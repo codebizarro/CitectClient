@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -117,6 +119,49 @@ namespace ctApiWrapper
             uint retLen;
             IntPtr ret = Native.ctGetProperty(new IntPtr(handle), Name, result, (uint)result.Capacity, out retLen, ReturnType);
             return result.ToString();
+        }
+
+        private int GetSamplePeriod(string tag)
+        {
+            uint obj;
+            int hFind = FindFirst(TableName.Trend, tag, out obj);
+            if (hFind > 0)
+            {
+                string s = GetProperty(obj, "SAMPLEPER", DbType.DBTYPE_STR);
+                return int.Parse(s);
+            }
+            else return 0;
+        }
+
+        public List<TrendEntry> TrendRead(string tag, DateTime dateRight, int length)
+        {
+            string query = CtApiTrend.Query(tag, dateRight, GetSamplePeriod(tag), length);
+            uint obj;
+            List<TrendEntry> list = new List<TrendEntry>();
+            int hFind = FindFirst(query, null, out obj);
+            while (hFind != 0)
+            {
+                string date = GetProperty(obj, "DATE", DbType.DBTYPE_STR);
+                string time = GetProperty(obj, "TIME", DbType.DBTYPE_STR);
+                string val = GetProperty(obj, tag, DbType.DBTYPE_STR);
+                TrendEntry entry = new TrendEntry(date, time, val);
+                list.Add(entry);
+                if (FindNext(hFind, out obj)==0)
+                {
+                    FindClose(hFind);
+                    hFind = 0;
+                    break;
+                }
+            }
+            return list;
+        }
+
+        public List<TrendEntry> TrendRead(string tag, DateTime dateRight, DateTime dateLeft)
+        {
+            double secondSpan = (dateRight - dateLeft).TotalSeconds;
+            int period = GetSamplePeriod(tag);
+            double length = secondSpan / period;
+            return TrendRead(tag, dateRight, (int)length);
         }
         #endregion
 

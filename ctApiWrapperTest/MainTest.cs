@@ -4,6 +4,7 @@ using ctApiWrapper;
 using System.Globalization;
 using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace ctApiWrapperTest
 {
@@ -21,7 +22,7 @@ namespace ctApiWrapperTest
         public MainTest()
         {
             CultureInfo customCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+            customCulture.NumberFormat.NumberDecimalSeparator = ",";
             System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
             api = new CitectApi(host, user, pass, 0);
         }
@@ -152,7 +153,7 @@ namespace ctApiWrapperTest
             }
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void GetAllTags()
         {
             for (int i = 0; i < stressCount; ++i)
@@ -179,7 +180,7 @@ namespace ctApiWrapperTest
             }
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void GetAllTrends()
         {
             for (int i = 0; i < stressCount; ++i)
@@ -205,6 +206,21 @@ namespace ctApiWrapperTest
                 api.Close();
                 Assert.IsFalse(api.Connected);
             }
+        }
+
+        [TestMethod]
+        public void TrendRead()
+        {
+            Assert.IsFalse(api.Connected);
+            api.Open();
+            Assert.IsTrue(api.Connected);
+            DateTime start = DateTime.Parse("03.06.2015 11:02:00");
+            List<TrendEntry> res1 = api.TrendRead(tagRead, start, 30);
+            Assert.IsTrue(res1.Count > 0);
+            List<TrendEntry> res2 = api.TrendRead(tagRead, start, start.AddMinutes(-5));
+            Assert.IsTrue(res2.Count > 0);
+            api.Close();
+            Assert.IsFalse(api.Connected);
         }
 
         //[TestMethod]
