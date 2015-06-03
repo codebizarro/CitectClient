@@ -52,20 +52,20 @@ namespace ctApiWrapper
         private bool IsConnected()
         {
             StringBuilder result = new StringBuilder(BUFFER_SIZE);
-            Native.ctCicode(hCtapi, "Abs(1)", 0, 0, result, (uint)result.Capacity, 0);
+            NativeMethods.ctCicode(hCtapi, "Abs(1)", 0, 0, result, (uint)result.Capacity, 0);
             return (Marshal.GetLastWin32Error() == 0/* && result.ToString() == "1"*/);
         }
 
         public string TagRead(string Tag)
         {
             StringBuilder result = new StringBuilder(BUFFER_SIZE);
-            Native.ctTagRead(hCtapi, Tag, result, (uint)result.Capacity);
+            NativeMethods.ctTagRead(hCtapi, Tag, result, (uint)result.Capacity);
             return result.ToString();
         }
 
         public void TagWrite(string Tag, string Value)
         {
-            Native.ctTagWrite(hCtapi, Tag, Value);
+            NativeMethods.ctTagWrite(hCtapi, Tag, Value);
         }
 
         public void Open()
@@ -74,42 +74,42 @@ namespace ctApiWrapper
             {
                 Close();
             }
-            hCtapi = Native.ctOpen(Host, User, Password, Mode);
+            hCtapi = NativeMethods.ctOpen(Host, User, Password, Mode);
         }
 
         public void Close()
         {
-            Native.ctClose(hCtapi);
+            NativeMethods.ctClose(hCtapi);
             hCtapi = IntPtr.Zero;
         }
 
         public int FindFirst(string TableName, string Filter, out uint ObjectHandle)
         {
-            IntPtr ret = Native.ctFindFirst(hCtapi, TableName, Filter, out ObjectHandle);
+            IntPtr ret = NativeMethods.ctFindFirst(hCtapi, TableName, Filter, out ObjectHandle);
             return ret.ToInt32();
         }
 
         public int FindNext(int Handle, out uint ObjectHandle)
         {
-            IntPtr ret = Native.ctFindNext(new IntPtr(Handle), out ObjectHandle);
+            IntPtr ret = NativeMethods.ctFindNext(new IntPtr(Handle), out ObjectHandle);
             return ret.ToInt32();
         }
 
         public int FindPrev(int Handle, out uint ObjectHandle)
         {
-            IntPtr ret = Native.ctFindPrev(new IntPtr(Handle), out ObjectHandle);
+            IntPtr ret = NativeMethods.ctFindPrev(new IntPtr(Handle), out ObjectHandle);
             return ret.ToInt32();
         }
 
         public int FindScroll(int Handle, uint Mode, int Offset, out uint ObjectHandle)
         {
-            IntPtr ret = Native.ctFindScroll(new IntPtr(Handle), Mode, Offset, out ObjectHandle);
+            IntPtr ret = NativeMethods.ctFindScroll(new IntPtr(Handle), Mode, Offset, out ObjectHandle);
             return ret.ToInt32();
         }
 
         public int FindClose(int Handle)
         {
-            IntPtr ret = Native.ctFindClose(new IntPtr(Handle));
+            IntPtr ret = NativeMethods.ctFindClose(new IntPtr(Handle));
             return ret.ToInt32();
         }
 
@@ -117,7 +117,7 @@ namespace ctApiWrapper
         {
             StringBuilder result = new StringBuilder(BUFFER_SIZE);
             uint retLen;
-            IntPtr ret = Native.ctGetProperty(new IntPtr(handle), Name, result, (uint)result.Capacity, out retLen, ReturnType);
+            IntPtr ret = NativeMethods.ctGetProperty(new IntPtr(handle), Name, result, (uint)result.Capacity, out retLen, ReturnType);
             return result.ToString();
         }
 
@@ -183,7 +183,7 @@ namespace ctApiWrapper
                     //component.Dispose();
                 }
                 //CloseHandle(handle);
-                Native.ctClose(hCtapi);
+                NativeMethods.ctClose(hCtapi);
                 hCtapi = IntPtr.Zero;
                 disposed = true;
             }
