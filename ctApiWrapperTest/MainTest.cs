@@ -25,18 +25,22 @@ namespace ctApiWrapperTest
         }
 
         [TestMethod]
-        public void Connection()
-        {
-            Assert.IsFalse(api.Connected);
-            api.Open();
-            Assert.IsTrue(api.Connected);
-            api.Close();
-            Assert.IsFalse(api.Connected);
-        }
-
-        [TestMethod]
         public void OpenClose()
         {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                api.Close();
+                Assert.IsFalse(api.Connected);
+            }
+        }
+
+        //[TestMethod]
+        public void OpenBad()
+        {
+            ctApiWrapper.CitectApi api = new CitectApi("192.168.22.145", "", "", 0);
             for (int i = 0; i < stressCount; ++i)
             {
                 Assert.IsFalse(api.Connected);
@@ -208,16 +212,37 @@ namespace ctApiWrapperTest
         [TestMethod]
         public void TrendRead()
         {
-            Assert.IsFalse(api.Connected);
-            api.Open();
-            Assert.IsTrue(api.Connected);
-            DateTime start = DateTime.Parse("02.07.2014 03:05:00");
-            List<TrendEntry> res1 = api.TrendRead(tagRead, start, 30);
-            Assert.IsTrue(res1.Count > 0);
-            List<TrendEntry> res2 = api.TrendRead(tagRead, start, start.AddMinutes(-50));
-            Assert.IsTrue(res2.Count > 0);
-            api.Close();
-            Assert.IsFalse(api.Connected);
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                DateTime start = DateTime.Parse("02.07.2014 03:05:00");
+                List<TrendEntry> res1 = api.TrendRead(tagRead, start, 300);
+                Assert.IsTrue(res1.Count > 0);
+                List<TrendEntry> res2 = api.TrendRead(tagRead, start, start.AddMinutes(-50));
+                Assert.IsTrue(res2.Count > 0);
+                api.Close();
+                Assert.IsFalse(api.Connected);
+            }
+        }
+
+        [TestMethod]
+        public void TrendRead2()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                DateTime start = DateTime.Parse("02.12.2014 03:05:00");
+                List<TrendEntry> res3 = api.TrendRead(tagRead, start, 300, true);
+                Assert.IsTrue(res3.Count > 0);
+                List<TrendEntry> res4 = api.TrendRead(tagRead, start, start.AddMinutes(-50), true);
+                Assert.IsTrue(res4.Count > 0);
+                api.Close();
+                Assert.IsFalse(api.Connected);
+            }
         }
 
         //[TestMethod]

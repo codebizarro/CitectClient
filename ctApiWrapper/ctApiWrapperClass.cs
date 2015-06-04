@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 
 namespace ctApiWrapper
 {
@@ -51,9 +53,14 @@ namespace ctApiWrapper
 
         private bool IsConnected()
         {
-            StringBuilder result = new StringBuilder(BUFFER_SIZE);
-            NativeMethods.ctCicode(hCtapi, "Abs(1)", 0, 0, result, (uint)result.Capacity, 0);
-            return (Marshal.GetLastWin32Error() == 0/* && result.ToString() == "1"*/);
+            if (hCtapi.ToInt32() == 0)
+                return false;
+            else
+            {
+                StringBuilder result = new StringBuilder(BUFFER_SIZE);
+                NativeMethods.ctCicode(hCtapi, "Abs(-8)", 0, 0, result, (uint)result.Capacity, 0);
+                return (Marshal.GetLastWin32Error() == 0 && result.ToString()[0].Equals('8'));
+            }
         }
 
         public string TagRead(string Tag)
@@ -68,13 +75,36 @@ namespace ctApiWrapper
             NativeMethods.ctTagWrite(hCtapi, Tag, Value);
         }
 
-        public void Open()
+        private void Open()
         {
             if (IsConnected())
             {
                 Close();
             }
             hCtapi = NativeMethods.ctOpen(Host, User, Password, Mode);
+        }
+
+        public void Open(int timeout = 5000)
+        {
+            Stopwatch sw = new Stopwatch();
+            bool connectSuccess = false;
+            Thread t = new Thread(delegate()
+            {
+                try
+                {
+                    sw.Start();
+                    Open();
+                    connectSuccess = true;
+                }
+                catch { }
+            });
+            t.IsBackground = true;
+            t.Start();
+            while (timeout > sw.ElapsedMilliseconds)
+                if (t.Join(1))
+                    break;
+            if (!connectSuccess)
+                throw new TimeoutException("Timed out while trying to connect.");
         }
 
         public void Close()
@@ -162,6 +192,38 @@ namespace ctApiWrapper
             int period = GetSamplePeriod(tag);
             double length = secondSpan / period;
             return TrendRead(tag, dateRight, (int)length);
+        }
+
+        public List<TrendEntry> TrendRead(string tag, DateTime dateRight, int length, bool interpolate)
+        {
+            string query = CtApiTrend.Query(tag, dateRight, GetSamplePeriod(tag), length, interpolate);
+            uint obj;
+            List<TrendEntry> list = new List<TrendEntry>();
+            int hFind = FindFirst(query, null, out obj);
+            while (hFind != 0)
+            {
+                string datetime = GetProperty(obj, "DateTime", DbType.DBTYPE_STR);
+                string mseconds = GetProperty(obj, "MSeconds", DbType.DBTYPE_STR);
+                string val = GetProperty(obj, "Value", DbType.DBTYPE_STR);
+                string quality = GetProperty(obj, "Quality", DbType.DBTYPE_STR);
+                //TrendEntry entry = new TrendEntry(date, time, val);
+                //list.Add(entry);
+                if (FindNext(hFind, out obj) == 0)
+                {
+                    FindClose(hFind);
+                    hFind = 0;
+                    break;
+                }
+            }
+            return list;
+        }
+
+        public List<TrendEntry> TrendRead(string tag, DateTime dateRight, DateTime dateLeft, bool interpolate)
+        {
+            double secondSpan = (dateRight - dateLeft).TotalSeconds;
+            int period = GetSamplePeriod(tag);
+            double length = secondSpan / period;
+            return TrendRead(tag, dateRight, (int)length, interpolate);
         }
         #endregion
 
