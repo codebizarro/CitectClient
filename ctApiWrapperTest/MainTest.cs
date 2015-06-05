@@ -221,28 +221,29 @@ namespace ctApiWrapperTest
                 api.Open();
                 Assert.IsTrue(api.Connected);
                 DateTime endtime = DateTime.Parse("04.06.2015 17:40:00");
+                endtime = api.GetDateTime();
                 //List<TrendEntry> res1 = api.TrendRead(tagRead, start, 6);
                 //Assert.IsTrue(res1.Count > 0);
                 List<TrendEntry> res2 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30));
                 Assert.IsTrue(res2.Count > 0);
-                //List<TrendEntry> res3 = api.TrendRead(tagRead, start, 6, true, true);
+                //List<TrendEntryQual> res3 = api.TrendRead(tagRead, start, 6, true, true);
                 //Assert.IsTrue(res3.Count > 0);
-                List<TrendEntry> res4 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30), true, true);
+                List<TrendEntryQual> res4 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30), true, false);
                 Assert.IsTrue(res4.Count > 0);
                 api.Close();
                 Assert.IsFalse(api.Connected);
-                //var all = from a in res2
-                //          join b in res4 on a.Date equals b.Date
-                //          select new { a, b };
-                //System.Text.StringBuilder sb = new System.Text.StringBuilder();
-                //sb.AppendLine("date2;val2;date4;val4");
-                //foreach (var el in all)
-                //{
-                //    string s = string.Format("{0};{1};{2};{3}",
-                //        el.a.Date, el.b.Value, el.b.Date.ToString("HH:mm:ss"), el.b.Value);
-                //    sb.AppendLine(s);
-                //}
-                //string ret = sb.ToString();
+                var all = from a in res2
+                          join b in res4 on a.Date equals b.Date
+                          select new { a, b };
+                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                sb.AppendLine("date2;val2;date4;val4");
+                foreach (var el in all)
+                {
+                    string s = string.Format("{0};{1};{2};{3}",
+                        el.a.Date, el.b.Value, el.b.Date.ToString("HH:mm:ss"), el.b.Value);
+                    sb.AppendLine(s);
+                }
+                string ret = sb.ToString();
             }
         }
 

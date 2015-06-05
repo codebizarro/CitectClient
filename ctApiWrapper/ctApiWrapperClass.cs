@@ -163,6 +163,14 @@ namespace ctApiWrapper
             else return 0;
         }
 
+        public DateTime GetDateTime()
+        {
+            StringBuilder result = new StringBuilder(BUFFER_SIZE);
+            NativeMethods.ctCicode(hCtapi, "TimeCurrent()", 0, 0, result, (uint)result.Capacity, 0);
+            int uxTime = int.Parse(result.ToString());
+            return uxTime.ToDateTime();
+        }
+
         public List<TrendEntry> TrendRead(string tag, DateTime dateRight, int length)
         {
             string query = CtApiTrend.Query(tag, dateRight, GetSamplePeriod(tag), length);
@@ -194,18 +202,18 @@ namespace ctApiWrapper
             return TrendRead(tag, dateRight, (int)length);
         }
 
-        public List<TrendEntry> TrendRead(string tag, DateTime dateRight, int length, bool interpolate, bool legacy = true)
+        public List<TrendEntryQual> TrendRead(string tag, DateTime dateRight, int length, bool interpolate, bool legacy = true)
         {
             string query = CtApiTrend.Query(tag, dateRight, GetSamplePeriod(tag), length, interpolate, legacy);
             uint obj;
-            List<TrendEntry> list = new List<TrendEntry>();
+            List<TrendEntryQual> list = new List<TrendEntryQual>();
             int hFind = FindFirst(query, null, out obj);
             while (hFind != 0)
             {
-                DateTime datetime = (int.Parse(GetProperty(obj, "DateTime", DbType.DBTYPE_STR))).ToDateTime();
+                string datetime = GetProperty(obj, "DateTime", DbType.DBTYPE_STR);
                 string val = GetProperty(obj, "Value", DbType.DBTYPE_STR);
-                //string quality = GetProperty(obj, "Quality", DbType.DBTYPE_STR);
-                TrendEntry entry = new TrendEntry(datetime, val);
+                string quality = GetProperty(obj, "Quality", DbType.DBTYPE_STR);
+                TrendEntryQual entry = new TrendEntryQual(datetime, val, quality);
                 list.Add(entry);
                 if (FindNext(hFind, out obj) == 0)
                 {
@@ -218,7 +226,7 @@ namespace ctApiWrapper
             return list;
         }
 
-        public List<TrendEntry> TrendRead(string tag, DateTime dateRight, DateTime dateLeft, bool interpolate, bool legacy = true)
+        public List<TrendEntryQual> TrendRead(string tag, DateTime dateRight, DateTime dateLeft, bool interpolate, bool legacy = true)
         {
             double secondSpan = (dateRight - dateLeft).TotalSeconds;
             int period = GetSamplePeriod(tag);
