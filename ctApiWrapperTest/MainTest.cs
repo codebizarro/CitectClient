@@ -12,10 +12,12 @@ namespace ctApiWrapperTest
     public class MainTest: IDisposable
     {
         string host = "192.168.22.141";
+        //string host = "192.168.22.10";
         string user = "kia";
         string pass = "kia";
         int stressCount = 1;
         string tagRead = "SEC15_REG_W1_M151_PV";
+        //string tagRead = "REG_14_PV";
         string tagWrite = "DummyStr";
         CitectApi api;
 
@@ -197,7 +199,8 @@ namespace ctApiWrapperTest
                 {
                     string tag = api.GetProperty(obj, "TAG", DbType.DBTYPE_STR);
                     string s = api.GetProperty(obj, "SAMPLEPER", DbType.DBTYPE_STR);
-                    lst.Add(tag + " - " + s);
+                    string name = api.GetProperty(obj, "NAME", DbType.DBTYPE_STR);
+                    lst.Add(tag + " - " + name + " - " + s);
                     //api.Debug = s;
                 } while (api.FindNext(hFind, out obj) != 0);
 
@@ -217,31 +220,29 @@ namespace ctApiWrapperTest
                 Assert.IsFalse(api.Connected);
                 api.Open();
                 Assert.IsTrue(api.Connected);
-                DateTime start = DateTime.Parse("02.07.2014 03:05:00");
-                List<TrendEntry> res1 = api.TrendRead(tagRead, start, 300);
-                Assert.IsTrue(res1.Count > 0);
-                List<TrendEntry> res2 = api.TrendRead(tagRead, start, start.AddMinutes(-50));
+                DateTime endtime = DateTime.Parse("04.06.2015 17:40:00");
+                //List<TrendEntry> res1 = api.TrendRead(tagRead, start, 6);
+                //Assert.IsTrue(res1.Count > 0);
+                List<TrendEntry> res2 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30));
                 Assert.IsTrue(res2.Count > 0);
-                api.Close();
-                Assert.IsFalse(api.Connected);
-            }
-        }
-
-        [TestMethod]
-        public void TrendRead2()
-        {
-            for (int i = 0; i < stressCount; ++i)
-            {
-                Assert.IsFalse(api.Connected);
-                api.Open();
-                Assert.IsTrue(api.Connected);
-                DateTime start = DateTime.Parse("02.12.2014 03:05:00");
-                List<TrendEntry> res3 = api.TrendRead(tagRead, start, 300, true);
-                Assert.IsTrue(res3.Count > 0);
-                List<TrendEntry> res4 = api.TrendRead(tagRead, start, start.AddMinutes(-50), true);
+                //List<TrendEntry> res3 = api.TrendRead(tagRead, start, 6, true, true);
+                //Assert.IsTrue(res3.Count > 0);
+                List<TrendEntry> res4 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30), true, true);
                 Assert.IsTrue(res4.Count > 0);
                 api.Close();
                 Assert.IsFalse(api.Connected);
+                //var all = from a in res2
+                //          join b in res4 on a.Date equals b.Date
+                //          select new { a, b };
+                //System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                //sb.AppendLine("date2;val2;date4;val4");
+                //foreach (var el in all)
+                //{
+                //    string s = string.Format("{0};{1};{2};{3}",
+                //        el.a.Date, el.b.Value, el.b.Date.ToString("HH:mm:ss"), el.b.Value);
+                //    sb.AppendLine(s);
+                //}
+                //string ret = sb.ToString();
             }
         }
 

@@ -34,5 +34,11 @@ namespace ctApiWrapper
             TimeSpan diff = date.ToUniversalTime() - origin;
             return (int)(diff.TotalSeconds);
         }
+
+        public static DateTime ToDateTime(this int seconds)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return origin.AddSeconds(seconds).ToLocalTime();
+        }
     }
 }

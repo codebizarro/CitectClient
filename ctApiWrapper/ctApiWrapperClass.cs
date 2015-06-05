@@ -143,7 +143,7 @@ namespace ctApiWrapper
             return ret.ToInt32();
         }
 
-        public string GetProperty(uint handle, string Name, int ReturnType) 
+        public string GetProperty(uint handle, string Name, int ReturnType)
         {
             StringBuilder result = new StringBuilder(BUFFER_SIZE);
             uint retLen;
@@ -158,7 +158,7 @@ namespace ctApiWrapper
             if (hFind > 0)
             {
                 string s = GetProperty(obj, "SAMPLEPER", DbType.DBTYPE_STR);
-                return int.Parse(s);
+                return (int)s.ToFloat();
             }
             else return 0;
         }
@@ -176,7 +176,7 @@ namespace ctApiWrapper
                 string val = GetProperty(obj, tag, DbType.DBTYPE_STR);
                 TrendEntry entry = new TrendEntry(date, time, val);
                 list.Add(entry);
-                if (FindNext(hFind, out obj)==0)
+                if (FindNext(hFind, out obj) == 0)
                 {
                     FindClose(hFind);
                     hFind = 0;
@@ -194,20 +194,19 @@ namespace ctApiWrapper
             return TrendRead(tag, dateRight, (int)length);
         }
 
-        public List<TrendEntry> TrendRead(string tag, DateTime dateRight, int length, bool interpolate)
+        public List<TrendEntry> TrendRead(string tag, DateTime dateRight, int length, bool interpolate, bool legacy = true)
         {
-            string query = CtApiTrend.Query(tag, dateRight, GetSamplePeriod(tag), length, interpolate);
+            string query = CtApiTrend.Query(tag, dateRight, GetSamplePeriod(tag), length, interpolate, legacy);
             uint obj;
             List<TrendEntry> list = new List<TrendEntry>();
             int hFind = FindFirst(query, null, out obj);
             while (hFind != 0)
             {
-                string datetime = GetProperty(obj, "DateTime", DbType.DBTYPE_STR);
-                string mseconds = GetProperty(obj, "MSeconds", DbType.DBTYPE_STR);
+                DateTime datetime = (int.Parse(GetProperty(obj, "DateTime", DbType.DBTYPE_STR))).ToDateTime();
                 string val = GetProperty(obj, "Value", DbType.DBTYPE_STR);
-                string quality = GetProperty(obj, "Quality", DbType.DBTYPE_STR);
-                //TrendEntry entry = new TrendEntry(date, time, val);
-                //list.Add(entry);
+                //string quality = GetProperty(obj, "Quality", DbType.DBTYPE_STR);
+                TrendEntry entry = new TrendEntry(datetime, val);
+                list.Add(entry);
                 if (FindNext(hFind, out obj) == 0)
                 {
                     FindClose(hFind);
@@ -215,15 +214,16 @@ namespace ctApiWrapper
                     break;
                 }
             }
+            list.Reverse();
             return list;
         }
 
-        public List<TrendEntry> TrendRead(string tag, DateTime dateRight, DateTime dateLeft, bool interpolate)
+        public List<TrendEntry> TrendRead(string tag, DateTime dateRight, DateTime dateLeft, bool interpolate, bool legacy = true)
         {
             double secondSpan = (dateRight - dateLeft).TotalSeconds;
             int period = GetSamplePeriod(tag);
             double length = secondSpan / period;
-            return TrendRead(tag, dateRight, (int)length, interpolate);
+            return TrendRead(tag, dateRight, (int)length, interpolate, legacy);
         }
         #endregion
 
