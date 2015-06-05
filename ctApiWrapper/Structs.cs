@@ -18,12 +18,24 @@ namespace ctApiWrapper
             this.val = val.Trim();
         }
 
+        public TrendEntry(DateTime datetime, string val)
+        {
+            this.date = datetime.ToString("dd.MM.yyyy");
+            this.time = datetime.ToString("HH:mm:ss");
+            this.val = val.Trim();
+        }
+
         public DateTime Date
         {
             get
             {
                 return DateTime.Parse(date + " " + time);
             }
+            //set
+            //{
+            //    date = value.ToString("dd.MM.yyyy");
+            //    time = value.ToString("HH:mm:ss");
+            //}
         }
 
         public float Value

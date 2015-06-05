@@ -18,15 +18,18 @@ namespace ctApiWrapper
             return ret;
         }
 
-        public static string Query(string tag, DateTime datetime, int period, int length, bool interpolate)
+        public static string Query(string tag, DateTime datetime, int period, int length, bool interpolate, bool legacy)
         {
             string endTime = datetime.ToSecondsFrom1970().ToString();
             string sPeriod = period.ToString();
             string sLength = length.ToString();
-            int iInterpolate = interpolate ? 0 : 1;
-            string ret = string.Format(@"TRNQUERY,{0},0,{1}.0,{2},{3},0,{4},0,{1}000", endTime, sPeriod, sLength, tag, iInterpolate);
-            //TRNQUERY,Endtime,EndtimeMs,Period,NumSamples,Tagname,Displaymode,Datamode,InstantTrend,SamplePeriod' 
-            //`ALMQUERY,Database,TagName,Starttime,StarttimeMs,Endtime,EndtimeMs,Period'
+            string ret = string.Empty;
+            if (!legacy)
+            {
+                int iInterpolate = interpolate ? 0 : 1;
+                ret = string.Format(@"TRNQUERY,{0},0,{1}.0,{2},{3},0,{4},0,{1}000", endTime, sPeriod, sLength, tag, iInterpolate);
+            }
+            else ret = string.Format(@"TRNQUERY,{0},0,{1}.0,{2},{3},0", endTime, sPeriod, sLength, tag);
             return ret;
         }
     }
