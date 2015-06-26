@@ -114,7 +114,7 @@ namespace ctApiWrapperTest
                 api.Open();
                 Assert.IsTrue(api.Connected);
                 uint obj;
-                int hFind = api.FindFirst(TableName.Trend, "*", out obj);
+                int hFind = api.FindFirst(Tables.Trend.TableName, "*", out obj);
                 Assert.IsTrue(hFind > 0);
                 int closeRet = api.FindClose(hFind);
                 Assert.IsTrue(closeRet != 0);
@@ -132,7 +132,7 @@ namespace ctApiWrapperTest
                 api.Open();
                 Assert.IsTrue(api.Connected);
                 uint obj, obj1, obj2;
-                int hFind = api.FindFirst(TableName.Trend, "*", out obj);
+                int hFind = api.FindFirst(Tables.Trend.TableName, "*", out obj);
                 Assert.IsTrue(hFind > 0);
                 api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_LAST, 0, out obj1);
                 api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_FIRST, 0, out obj2);
@@ -156,7 +156,7 @@ namespace ctApiWrapperTest
             }
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void GetAllTags()
         {
             for (int i = 0; i < stressCount; ++i)
@@ -165,16 +165,19 @@ namespace ctApiWrapperTest
                 api.Open();
                 Assert.IsTrue(api.Connected);
                 uint obj;
-                int hFind = api.FindFirst(TableName.Tag, "*", out obj);
+                int hFind = api.FindFirst(Tables.Tag.TableName, "*", out obj);
                 Assert.IsTrue(hFind > 0);
                 ArrayList lst = new ArrayList();
                 do
                 {
                     string tag = api.GetProperty(obj, "Tag", DbType.DBTYPE_STR);
                     string s = api.GetProperty(obj, "FullName", DbType.DBTYPE_STR);
-                    lst.Add(tag + " - " + s);
-                } while (api.FindNext(hFind, out obj) != 0);
+                    string comment = api.GetProperty(obj, "Comment", DbType.DBTYPE_STR);
+                    string add = tag + " - " + s + " - " + comment;
+                    lst.Add(add);
+                    api.Debug = add;
 
+                } while (api.FindNext(hFind, out obj) != 0);
 
                 int closeRet = api.FindClose(hFind);
                 Assert.IsTrue(closeRet != 0);
@@ -183,7 +186,7 @@ namespace ctApiWrapperTest
             }
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void GetAllTrends()
         {
             for (int i = 0; i < stressCount; ++i)
@@ -192,7 +195,7 @@ namespace ctApiWrapperTest
                 api.Open();
                 Assert.IsTrue(api.Connected);
                 uint obj;
-                int hFind = api.FindFirst(TableName.Trend, "*", out obj);
+                int hFind = api.FindFirst(Tables.Trend.TableName, "*", out obj);
                 Assert.IsTrue(hFind > 0);
                 ArrayList lst = new ArrayList();
                 do
@@ -200,8 +203,10 @@ namespace ctApiWrapperTest
                     string tag = api.GetProperty(obj, "TAG", DbType.DBTYPE_STR);
                     string s = api.GetProperty(obj, "SAMPLEPER", DbType.DBTYPE_STR);
                     string name = api.GetProperty(obj, "NAME", DbType.DBTYPE_STR);
-                    lst.Add(tag + " - " + name + " - " + s);
-                    //api.Debug = s;
+                    string comment = api.GetProperty(obj, "COMMENT", DbType.DBTYPE_STR);
+                    string add = tag + " - " + name + " - " + s + " - " + comment;
+                    lst.Add(add);
+                    api.Debug =add;
                 } while (api.FindNext(hFind, out obj) != 0);
 
 
@@ -228,7 +233,7 @@ namespace ctApiWrapperTest
                 Assert.IsTrue(res2.Count > 0);
                 //List<TrendEntryQual> res3 = api.TrendRead(tagRead, start, 6, true, true);
                 //Assert.IsTrue(res3.Count > 0);
-                List<TrendEntryQual> res4 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30), true, false);
+                List<TrendEntryQual> res4 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30), true, true);
                 Assert.IsTrue(res4.Count > 0);
                 api.Close();
                 Assert.IsFalse(api.Connected);
@@ -246,6 +251,46 @@ namespace ctApiWrapperTest
                 string ret = sb.ToString();
             }
         }
+       
+        [TestMethod]
+        public void TrendReadCTAPITrend()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                DateTime endtime = api.GetDateTime();
+                List<TrendEntry> res2 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30));
+                Assert.IsTrue(res2.Count > 0);
+                api.Close();
+                Assert.IsFalse(api.Connected);
+            }
+        }
+
+        [TestMethod]
+        public void TrendReadTRNQUERY()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                DateTime endtime = api.GetDateTime();
+                List<TrendEntryQual> res4 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30), true, true);
+                Assert.IsTrue(res4.Count > 0);
+                api.Close();
+                Assert.IsFalse(api.Connected);
+            }
+        }
+
+        [TestMethod]
+        public void GetStaticClassName()
+        {
+            Assert.IsTrue(ctApiWrapper.Tables.Trend.TableName == "Trend");
+            Assert.IsTrue(ctApiWrapper.Tables.Trend.CLUSTER == "CLUSTER");
+            Assert.IsTrue(ctApiWrapper.Tables.Trend.NAME == "NAME");
+        }
 
         //[TestMethod]
         public void CheckTrendsEqTags()
@@ -256,7 +301,7 @@ namespace ctApiWrapperTest
                 api.Open();
                 Assert.IsTrue(api.Connected);
                 uint obj;
-                int hFind = api.FindFirst(TableName.Trend, "*", out obj);
+                int hFind = api.FindFirst(Tables.Trend.TableName, "*", out obj);
                 Assert.IsTrue(hFind > 0);
                 ArrayList lst = new ArrayList();
                 do
@@ -264,7 +309,7 @@ namespace ctApiWrapperTest
                     string tag = api.GetProperty(obj, "TAG", DbType.DBTYPE_STR);
                     string trendComment = api.GetProperty(obj, "COMMENT", DbType.DBTYPE_STR);
                     uint tobj;
-                    int tFind = api.FindFirst(TableName.Tag, tag, out tobj);
+                    int tFind = api.FindFirst(Tables.Tag.TableName, tag, out tobj);
                     if (tobj > 0)
                     {
                         string tagComment = api.GetProperty(tobj, "COMMENT", DbType.DBTYPE_STR);

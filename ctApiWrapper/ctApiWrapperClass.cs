@@ -154,10 +154,10 @@ namespace ctApiWrapper
         private int GetSamplePeriod(string tag)
         {
             uint obj;
-            int hFind = FindFirst(TableName.Trend, tag, out obj);
+            int hFind = FindFirst(Tables.Trend.TableName, tag, out obj);
             if (hFind > 0)
             {
-                string s = GetProperty(obj, "SAMPLEPER", DbType.DBTYPE_STR);
+                string s = GetProperty(obj, Tables.Trend.SAMPLEPER, DbType.DBTYPE_STR);
                 return (int)s.ToFloat();
             }
             else return 0;
