@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace ctApiWrapper
@@ -24,50 +25,1556 @@ namespace ctApiWrapper
         public const string TsAnaAlm = "TsAnaAlm";
         public const string ArgDigAlmStateDesc = "ArgDigAlmStateDesc";
     }
-    /*
-Trend - Trend Tags 
-CLUSTER, NAME/TAG, RAW_ZERO, RAW_FULL, ENG_ZERO, ENG_FULL, ENG_UNITS, COMMENT, SAMPLEPER, TYPE
 
-DigAlm - Digital Alarm Tags 
-CLUSTER, TAG, NAME, DESC, HELP, CATEGORY, STATE, TIME, DATE, AREA, ALMCOMMENT
+    public static class Tables
+    {
+        public static class Tag
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+        }
+        public static class LocalTag
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+        }
+        public static class Clusters
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+        }
+        public static class Accum
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+            public static string PRIV
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string AREA
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string CLUSTER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string NAME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TRIGGER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string VALUE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string RUNNING
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STARTS
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TOTALISER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+        }
+        public static class Trend
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+            public static string CLUSTER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string NAME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TAG
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string RAW_ZERO
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string RAW_FULL
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ENG_ZERO
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ENG_FULL
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ENG_UNITS
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string COMMENT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string SAMPLEPER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TYPE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+        }
+        public static class DigAlm
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+            public static string CLUSTER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string NAME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TAG
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string HELP
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string CATEGORY
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TIME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string AREA
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ALMCOMMENT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+        }
+        public static class AdvAlm
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+            public static string CLUSTER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string NAME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TAG
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string HELP
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string CATEGORY
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TIME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string AREA
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ALMCOMMENT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+        }
+        public static class HResAlm
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+            public static string CLUSTER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string NAME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TAG
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string HELP
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string CATEGORY
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TIME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string MILLISEC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string AREA
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ALMCOMMENT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+        }
+        public static class ArgDigAlm
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+            public static string CLUSTER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string NAME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TAG
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string HELP
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string CATEGORY
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TIME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string AREA
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ALMCOMMENT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string PRIORITY
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE_DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string OLD_DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+        }
+        public static class TsDigAlm
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+            public static string CLUSTER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string NAME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TAG
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string CATEGORY
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string AREA
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ALMCOMMENT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+        }
+        public static class TsAnaAlm
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+            public static string CLUSTER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string NAME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TAG
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string CATEGORY
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string AREA
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ALMCOMMENT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+        }
+        public static class AnaAlm
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+            public static string CLUSTER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string NAME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TAG
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string HELP
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string CATEGORY
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TIME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string AREA
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string VALUE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string HIGH
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string LOW
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string HIGHHIGH
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string LOWLOW
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DEADBAND
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string RATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DEVIATION
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ALMCOMMENT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+        }
+        public static class ArgAnaAlm
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+            public static string CLUSTER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string NAME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TAG
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string HELP
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ALMCOMMENT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string CATEGORY
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TIME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string AREA
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string VALUE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string PRIORITY
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string HIGH
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string LOW
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string HIGHHIGH
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string LOWLOW
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DEADBAND
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string RATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DEVIATION
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+        }
+        public static class ArgDigAlmStateDesc
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+            public static string CLUSTER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TAG
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE_DESC0
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE_DESC1
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE_DESC2
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE_DESC3
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE_DESC4
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE_DESC5
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE_DESC6
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE_DESC7
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+        }
+        public static class Alarm
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+            public static string CLUSTER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TAG
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string NAME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string HELP
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string CATEGORY
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TIME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string AREA
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
 
-AnaAlm - Analog Alarm Tags 
-CLUSTER, TAG, NAME, DESC, HELP, CATEGORY, STATE, TIME, DATE, AREA, VALUE, HIGH, LOW, HIGHHIGH, LOWLOW, DEADBAND, RATE, DEVIATION, ALMCOMMENT
+            }
+            public static string ALMCOMMENT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
 
-AdvAlm - Advanced Alarm Tags 
-CLUSTER, TAG, NAME, DESC, HELP, CATEGORY, STATE, TIME, DATE, AREA, ALMCOMMENT
+            }
+            public static string VALUE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
 
-HResAlm - Time-Stamped Alarm Tags 
-CLUSTER, TAG, NAME, DESC, HELP, CATEGORY, STATE, TIME, MILLISEC, DATE, AREA, ALMCOMMENT
+            }
+            public static string HIGH
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
 
-ArgDigAlm - Argyle Digital Alarm Tags 
-CLUSTER, TAG, NAME, DESC, HELP, CATEGORY, STATE, TIME, DATE, AREA, ALMCOMMENT, PRIORITY, STATE_DESC, OLD_DESC
+            }
+            public static string LOW
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
 
-ArgAnaAlm - Argyle Analog Alarm Tags 
-CLUSTER, TAG, NAME, HELP, ALMCOMMENT, CATEGORY, STATE, TIME, DATE, AREA, VALUE, PRIORITY, HIGH, LOW, HIGHHIGH, LOWLOW, DEADBAND, RATE, DEVIATION
+            }
+            public static string HIGHHIGH
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
 
-TsDigAlm - Time-Stamped Digital Alarm Tags 
-CLUSTER, TAG, NAME, DESC, CATEGORY, AREA, ALMCOMMENT
+            }
+            public static string LOWLOW
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
 
-TsAnaAlm - Time-Stamped Analog Alarm Tags 
-CLUSTER, TAG, NAME, DESC, CATEGORY, AREA, ALMCOMMENT
+            }
+            public static string DEADBAND
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
 
-ArgDigAlmStateDesc - Argyle Digital Alarm Tag State Descriptions 
-CLUSTER, TAG, STATE_DESC0, STATE_DESC1, STATE_DESC2, STATE_DESC3, STATE_DESC4, STATE_DESC5, STATE_DESC6, STATE_DESC7
+            }
+            public static string RATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
 
-Alarm - Alarm Tags 
-CLUSTER, TAG, NAME, DESC, HELP, CATEGORY, STATE, TIME, DATE, AREA, ALMCOMMENT, VALUE, HIGH, LOW, HIGHHIGH, LOWLOW, DEADBAND, RATE, DEVIATION, PRIORITY, STATE_DESC, OLD_DESC, ALARMTYPE
+            }
+            public static string DEVIATION
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
 
-AlarmSummary - Alarm Summary 
-CLUSTER, TAG, NAME, DESC, HELP, CATEGORY, TIME, DATE, AREA, VALUE, HIGH, LOW, HIGHHIGH, LOWLOW, DEADBAND, RATE, DEVIATION, PRIORITY, STATE_DESC, OLD_DESC, ALARMTYPE, ONDATE, ONDATEEXT, ONTIME, ONMILLI, OFFDATE, OFFDATEEXT, OFFTIME, OFFMILLI, DELTATIME, ACKDATE, ACKDATEEXT, ACKTIME, ALMCOMMENT, USERNAME, FULLNAME, USERDESC, SUMSTATE, SUMDESC, NATIVE_SUMDESC, COMMENT, NATIVE_COMMENT
+            }
+            public static string PRIORITY
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
 
-Accum - Accumulators 
-PRIV, AREA, CLUSTER, NAME, TRIGGER, VALUE, RUNNING, STARTS, TOTALISER
+            }
+            public static string STATE_DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
 
-Tag - Variable Tags 
-LocalTag - Local Tags 
-Cluster - Clusters  
-    */
+            }
+            public static string OLD_DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+
+            }
+            public static string ALARMTYPE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+
+            }
+        }
+        public static class AlarmSummary
+        {
+            public static string TableName
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().DeclaringType.Name;
+                }
+            }
+            public static string CLUSTER
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TAG
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string NAME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string HELP
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string CATEGORY
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string TIME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string AREA
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string VALUE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string HIGH
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string LOW
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string HIGHHIGH
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string LOWLOW
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DEADBAND
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string RATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DEVIATION
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string PRIORITY
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string STATE_DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string OLD_DESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ALARMTYPE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ONDATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ONDATEEXT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ONTIME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ONMILLI
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string OFFDATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string OFFDATEEXT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string OFFTIME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string OFFMILLI
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string DELTATIME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ACKDATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ACKDATEEXT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ACKTIME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string ALMCOMMENT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string USERNAME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string FULLNAME
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string USERDESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string SUMSTATE
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string SUMDESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string NATIVE_SUMDESC
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string COMMENT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+            public static string NATIVE_COMMENT
+            {
+                get
+                {
+                    return MethodBase.GetCurrentMethod().Name.Replace("get_", "");
+                }
+            }
+        }
+    }
 
     public static class PropertyName
     {
