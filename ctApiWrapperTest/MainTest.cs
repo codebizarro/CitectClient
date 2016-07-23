@@ -9,14 +9,15 @@ using System.Collections.Generic;
 namespace ctApiWrapperTest
 {
     [TestClass]
-    public class MainTest: IDisposable
+    public class MainTest : IDisposable
     {
-        string host = "192.168.22.141";
+        string host = "192.168.22.10";
         //string host = "192.168.22.10";
         string user = "kia";
         string pass = "kia";
         int stressCount = 1;
-        string tagRead = "SEC15_REG_W1_M151_PV";
+        //string tagRead = "SEC15_REG_W1_M151_PV";
+        string tagRead = "Q_Vg1010_Расход_воды_на_гидроподпор";
         //string tagRead = "REG_14_PV";
         string tagWrite = "DummyStr";
         CitectApi api;
@@ -206,7 +207,7 @@ namespace ctApiWrapperTest
                     string comment = api.GetProperty(obj, "COMMENT", DbType.DBTYPE_STR);
                     string add = tag + " - " + name + " - " + s + " - " + comment;
                     lst.Add(add);
-                    api.Debug =add;
+                    api.Debug = add;
                 } while (api.FindNext(hFind, out obj) != 0);
 
 
@@ -251,7 +252,7 @@ namespace ctApiWrapperTest
                 string ret = sb.ToString();
             }
         }
-       
+
         [TestMethod]
         public void TrendReadCTAPITrend()
         {
@@ -290,6 +291,37 @@ namespace ctApiWrapperTest
             Assert.IsTrue(ctApiWrapper.Tables.Trend.TableName == "Trend");
             Assert.IsTrue(ctApiWrapper.Tables.Trend.CLUSTER == "CLUSTER");
             Assert.IsTrue(ctApiWrapper.Tables.Trend.NAME == "NAME");
+        }
+
+        [TestMethod]
+        public void SetAVMP1True()
+        {
+            api.Open();
+            for (int i = 0; i < 6; ++i)
+            {
+                api.TagWrite("SEC13_AVMP1", "1");
+            }
+            api.Close();
+        }
+
+        [TestMethod]
+        public void SetLevel1()
+        {
+            api.Open();
+            string s = api.TagRead("SEC13_LIT_PB3_ZPO_PV");
+            uint l = uint.Parse(s);
+            int delta = 10;
+            for (int i = 0; i < delta; ++i)
+            {
+                l++;
+                api.TagWrite("SEC13_LIT_PB3_ZPO_PV", l.ToString());
+            }
+            for (int i = 0; i < delta; ++i)
+            {
+                l--;
+                api.TagWrite("SEC13_LIT_PB3_ZPO_PV", l.ToString());
+            }
+            api.Close();
         }
 
         //[TestMethod]
@@ -336,6 +368,22 @@ namespace ctApiWrapperTest
             var q2 = a.OrderBy(n => n.date).Select(m => DateTime.Parse(m.date));
 
             Assert.IsTrue(q1.Except(q2).ToArray().Length == 0);
+        }
+
+        [TestMethod]
+        public void TrendReadVg1010()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(api.Connected);
+                api.Open();
+                Assert.IsTrue(api.Connected);
+                DateTime endtime = new DateTime(2015, 10, 6, 23, 50, 0);
+                List<TrendEntryQual> res4 = api.TrendRead(tagRead, endtime, endtime.AddHours(-2), true, true);
+                Assert.IsTrue(res4.Count > 0);
+                api.Close();
+                Assert.IsFalse(api.Connected);
+            }
         }
 
         #region IDisposable
