@@ -5,8 +5,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>ctApiWrapper</RootNamespace>
-    <AssemblyName>ctApiWrapper</AssemblyName>
+    <RootNamespace>CitectClient</RootNamespace>
+    <AssemblyName>CitectClient</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <TargetFrameworkProfile />
@@ -35,13 +35,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CitectClient.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="Exceptions.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="Helpers.cs" />
+    <Compile Include="Extensions\FloatExtensions.cs" />
+    <Compile Include="Model\Enums\Tables.cs" />
+    <Compile Include="Model\Enums\OpenOptions.cs" />
+    <Compile Include="Model\Enums\FindOptions.cs" />
+    <Compile Include="Model\Enums\DbType.cs" />
+    <Compile Include="Model\Enums\Quality.cs" />
+    <Compile Include="Exceptions\TimeoutException.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Model\TrendEntryQual.cs" />
     <Compile Include="Native.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Structs.cs" />
+    <Compile Include="Model\TrendEntry.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
