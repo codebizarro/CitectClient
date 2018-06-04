@@ -5,8 +5,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>CitectClient</RootNamespace>
-    <AssemblyName>CitectClient</AssemblyName>
+    <RootNamespace>System.Net.CitectClient</RootNamespace>
+    <AssemblyName>System.Net.CitectClient</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <TargetFrameworkProfile />
@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="CitectClient.cs" />
     <Compile Include="Extensions\FloatExtensions.cs" />
+    <Compile Include="ICitectClient.cs" />
     <Compile Include="Model\Enums\Tables.cs" />
     <Compile Include="Model\Enums\OpenOptions.cs" />
     <Compile Include="Model\Enums\FindOptions.cs" />

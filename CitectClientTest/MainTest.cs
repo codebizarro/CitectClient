@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ctApiWrapper;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.CitectClient;
 
 namespace ctApiWrapperTest
 {
@@ -19,11 +19,19 @@ namespace ctApiWrapperTest
         string tagRead = "L1_C1T3000AI";
         //string tagRead = "REG_14_PV";
         string tagWrite = "DummyStr";
-        CitectApi api;
+        ICitectClient api;
 
         public MainTest()
         {
-            api = new CitectApi(host, user, pass, 0);
+            api = new CitectClient(host, user, pass, 0);
+        }
+
+        public string Debug
+        {
+            set
+            {
+                System.Diagnostics.Debug.WriteLine(value);
+            }
         }
 
         [TestMethod]
@@ -42,7 +50,7 @@ namespace ctApiWrapperTest
         //[TestMethod]
         public void OpenBad()
         {
-            ctApiWrapper.CitectApi api = new CitectApi("192.168.22.145", "", "", 0);
+            CitectClient api = new CitectClient("192.168.22.145", "", "", 0);
             for (int i = 0; i < stressCount; ++i)
             {
                 Assert.IsFalse(api.Connected);
@@ -175,7 +183,7 @@ namespace ctApiWrapperTest
                     string comment = api.GetProperty(obj, "Comment", DbType.DBTYPE_STR);
                     string add = tag + " - " + s + " - " + comment;
                     lst.Add(add);
-                    api.Debug = add;
+                    Debug = add;
 
                 } while (api.FindNext(hFind, out obj) != 0);
 
@@ -206,7 +214,7 @@ namespace ctApiWrapperTest
                     string comment = api.GetProperty(obj, "COMMENT", DbType.DBTYPE_STR);
                     string add = tag + " - " + name + " - " + s + " - " + comment;
                     lst.Add(add);
-                    api.Debug = add;
+                    Debug = add;
                 } while (api.FindNext(hFind, out obj) != 0);
 
                 int closeRet = api.FindClose(hFind);
@@ -228,12 +236,12 @@ namespace ctApiWrapperTest
                 endtime = api.GetDateTime();
                 //List<TrendEntry> res1 = api.TrendRead(tagRead, start, 6);
                 //Assert.IsTrue(res1.Count > 0);
-                List<TrendEntry> res2 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30));
-                Assert.IsTrue(res2.Count > 0);
+                var res2 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30));
+                Assert.IsTrue(res2.Count() > 0);
                 //List<TrendEntryQual> res3 = api.TrendRead(tagRead, start, 6, true, true);
                 //Assert.IsTrue(res3.Count > 0);
-                List<TrendEntryQual> res4 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30), true, true);
-                Assert.IsTrue(res4.Count > 0);
+                IEnumerable<TrendEntryQual> res4 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30), true, true);
+                Assert.IsTrue(res4.Count() > 0);
                 api.Close();
                 Assert.IsFalse(api.Connected);
                 var all = from a in res2
@@ -260,8 +268,8 @@ namespace ctApiWrapperTest
                 api.Open();
                 Assert.IsTrue(api.Connected);
                 DateTime endtime = api.GetDateTime();
-                List<TrendEntry> res2 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30));
-                Assert.IsTrue(res2.Count > 0);
+                var res2 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30));
+                Assert.IsTrue(res2.Count() > 0);
                 api.Close();
                 Assert.IsFalse(api.Connected);
             }
@@ -276,8 +284,8 @@ namespace ctApiWrapperTest
                 api.Open();
                 Assert.IsTrue(api.Connected);
                 DateTime endtime = api.GetDateTime();
-                List<TrendEntryQual> res4 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30), true, true);
-                Assert.IsTrue(res4.Count > 0);
+                var res4 = api.TrendRead(tagRead, endtime, endtime.AddMinutes(-30), true, true);
+                Assert.IsTrue(res4.Count() > 0);
                 api.Close();
                 Assert.IsFalse(api.Connected);
             }
@@ -286,9 +294,9 @@ namespace ctApiWrapperTest
         [TestMethod]
         public void GetStaticClassName()
         {
-            Assert.IsTrue(ctApiWrapper.Tables.Trend.TableName == "Trend");
-            Assert.IsTrue(ctApiWrapper.Tables.Trend.CLUSTER == "CLUSTER");
-            Assert.IsTrue(ctApiWrapper.Tables.Trend.NAME == "NAME");
+            Assert.IsTrue(Tables.Trend.TableName == "Trend");
+            Assert.IsTrue(Tables.Trend.CLUSTER == "CLUSTER");
+            Assert.IsTrue(Tables.Trend.NAME == "NAME");
         }
 
         //[TestMethod]
@@ -377,8 +385,8 @@ namespace ctApiWrapperTest
                 api.Open();
                 Assert.IsTrue(api.Connected);
                 DateTime endtime = new DateTime(2015, 10, 6, 23, 50, 0);
-                List<TrendEntryQual> res4 = api.TrendRead(tagRead, endtime, endtime.AddHours(-2), true, true);
-                Assert.IsTrue(res4.Count > 0);
+                var res4 = api.TrendRead(tagRead, endtime, endtime.AddHours(-2), true, true);
+                Assert.IsTrue(res4.Count() > 0);
                 api.Close();
                 Assert.IsFalse(api.Connected);
             }
