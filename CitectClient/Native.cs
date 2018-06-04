@@ -1,8 +1,7 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ctApiWrapper
+namespace System.Net.CitectClient.Platform
 {
     [BestFitMapping(false, ThrowOnUnmappableChar = true)]
     static class NativeMethods

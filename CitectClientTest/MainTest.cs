@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ctApiWrapper;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.CitectClient;
 
 namespace ctApiWrapperTest
 {
@@ -19,11 +19,11 @@ namespace ctApiWrapperTest
         string tagRead = "L1_C1T3000AI";
         //string tagRead = "REG_14_PV";
         string tagWrite = "DummyStr";
-        CitectApi api;
+        CitectClient api;
 
         public MainTest()
         {
-            api = new CitectApi(host, user, pass, 0);
+            api = new CitectClient(host, user, pass, 0);
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@ namespace ctApiWrapperTest
         //[TestMethod]
         public void OpenBad()
         {
-            ctApiWrapper.CitectApi api = new CitectApi("192.168.22.145", "", "", 0);
+            CitectClient api = new CitectClient("192.168.22.145", "", "", 0);
             for (int i = 0; i < stressCount; ++i)
             {
                 Assert.IsFalse(api.Connected);
@@ -286,9 +286,9 @@ namespace ctApiWrapperTest
         [TestMethod]
         public void GetStaticClassName()
         {
-            Assert.IsTrue(ctApiWrapper.Tables.Trend.TableName == "Trend");
-            Assert.IsTrue(ctApiWrapper.Tables.Trend.CLUSTER == "CLUSTER");
-            Assert.IsTrue(ctApiWrapper.Tables.Trend.NAME == "NAME");
+            Assert.IsTrue(Tables.Trend.TableName == "Trend");
+            Assert.IsTrue(Tables.Trend.CLUSTER == "CLUSTER");
+            Assert.IsTrue(Tables.Trend.NAME == "NAME");
         }
 
         //[TestMethod]
