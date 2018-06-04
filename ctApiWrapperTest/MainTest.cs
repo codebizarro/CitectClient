@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ctApiWrapper;
-using System.Globalization;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,13 +10,13 @@ namespace ctApiWrapperTest
     [TestClass]
     public class MainTest : IDisposable
     {
-        string host = "192.168.22.10";
+        string host = "10.20.0.14";
         //string host = "192.168.22.10";
-        string user = "kia";
-        string pass = "kia";
+        string user = "evk";
+        string pass = "154263";
         int stressCount = 1;
         //string tagRead = "SEC15_REG_W1_M151_PV";
-        string tagRead = "Q_Vg1010_Расход_воды_на_гидроподпор";
+        string tagRead = "L1_C1T3000AI";
         //string tagRead = "REG_14_PV";
         string tagWrite = "DummyStr";
         CitectApi api;
@@ -85,7 +84,7 @@ namespace ctApiWrapperTest
             }
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void Write()
         {
             for (int i = 0; i < stressCount; ++i)
@@ -210,7 +209,6 @@ namespace ctApiWrapperTest
                     api.Debug = add;
                 } while (api.FindNext(hFind, out obj) != 0);
 
-
                 int closeRet = api.FindClose(hFind);
                 Assert.IsTrue(closeRet != 0);
                 api.Close();
@@ -293,7 +291,7 @@ namespace ctApiWrapperTest
             Assert.IsTrue(ctApiWrapper.Tables.Trend.NAME == "NAME");
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void SetAVMP1True()
         {
             api.Open();
@@ -304,7 +302,7 @@ namespace ctApiWrapperTest
             api.Close();
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void SetLevel1()
         {
             api.Open();
@@ -370,7 +368,7 @@ namespace ctApiWrapperTest
             Assert.IsTrue(q1.Except(q2).ToArray().Length == 0);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void TrendReadVg1010()
         {
             for (int i = 0; i < stressCount; ++i)
