@@ -58,9 +58,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ctApiWrapper\ctApiWrapper.csproj">
+    <ProjectReference Include="..\CitectClient\CitectClient.csproj">
       <Project>{58bdbb46-8a22-45af-8d18-3d091fe5667c}</Project>
-      <Name>ctApiWrapper</Name>
+      <Name>CitectApiClient</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
