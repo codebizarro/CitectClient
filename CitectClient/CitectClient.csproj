@@ -34,7 +34,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ctApiWrapperClass.cs" />
+    <Compile Include="CitectClient.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Extensions.cs" />

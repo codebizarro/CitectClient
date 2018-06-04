@@ -6,3 +6,7 @@ ctApiWrapper/bin/**
 ctApiWrapperTest/bin/**
 ctApiWrapperTest/obj/**
 .vs/**
+CitectClient/obj/**
+CitectClient/bin/**
+CitectClientTest/obj/**
+CitectClientTest/bin/**

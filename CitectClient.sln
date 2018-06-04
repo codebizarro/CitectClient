@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ctApiWrapper", "ctApiWrapper\ctApiWrapper.csproj", "{58BDBB46-8A22-45AF-8D18-3D091FE5667C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CitectApiClient", "CitectClient\CitectClient.csproj", "{58BDBB46-8A22-45AF-8D18-3D091FE5667C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ctApiWrapperTest", "ctApiWrapperTest\ctApiWrapperTest.csproj", "{787208F5-121E-40ED-8CD1-85D8D835957C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CitectApiClientTest", "CitectClientTest\CitectClientTest.csproj", "{787208F5-121E-40ED-8CD1-85D8D835957C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,5 +40,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {203EAC2D-41ED-4A4A-9F20-547096C6A81C}
 	EndGlobalSection
 EndGlobal
