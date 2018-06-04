@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using System.Net.CitectClient.Platform;
 
-namespace ctApiWrapper
+namespace System.Net.CitectClient
 {
-    public class CitectApi : IDisposable
+    public class CitectClient : IDisposable
     {
         #region Constructors
-        public CitectApi(string host, string user, string password, uint mode)
+        public CitectClient(string host, string user, string password, uint mode)
         {
             Host = host;
             User = user;
@@ -88,7 +87,7 @@ namespace ctApiWrapper
         {
             Stopwatch sw = new Stopwatch();
             bool connectSuccess = false;
-            Thread t = new Thread(delegate()
+            Thread t = new Thread(delegate ()
             {
                 try
                 {
@@ -236,7 +235,7 @@ namespace ctApiWrapper
         #endregion
 
         #region IDisposable
-        private bool disposed = false;
+        private bool disposed;
 
         public void Dispose()
         {
@@ -259,7 +258,7 @@ namespace ctApiWrapper
             }
         }
 
-        ~CitectApi()
+        ~CitectClient()
         {
             Dispose(false);
         }
