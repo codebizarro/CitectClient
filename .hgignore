@@ -5,3 +5,4 @@ ctApiApplication/obj/**
 ctApiWrapper/bin/**
 ctApiWrapperTest/bin/**
 ctApiWrapperTest/obj/**
+.vs/**
