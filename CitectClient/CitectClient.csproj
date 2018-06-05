@@ -64,7 +64,7 @@
     <Compile Include="Models\Enums\QualityEnum.cs" />
     <Compile Include="Exceptions\TimeoutException.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
-    <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Helpers\TrendHelpers.cs" />
     <Compile Include="Models\TrendEntryQual.cs" />
     <Compile Include="Native.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
