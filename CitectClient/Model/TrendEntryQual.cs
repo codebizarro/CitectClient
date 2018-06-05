@@ -1,46 +1,18 @@
 ﻿namespace System.Net.CitectClient
 {
-    public class TrendEntryQual
+    public class TrendEntryQual: BaseTrendEntry
     {
-        string datetime;
-        string val;
-        string quality;
+        private readonly string _datetime;
+        private readonly string _quality;
 
-        public TrendEntryQual(string datetime, string val, string quality)
+        public TrendEntryQual(string datetime, string value, string quality) : base(value)
         {
-            this.datetime = datetime.Trim();
-            this.val = val.Trim();
-            this.quality = quality;
+            _datetime = datetime.Trim();
+            _value = value.Trim();
+            _quality = quality;
+            _dateTime = (int.Parse(datetime)).ToDateTime();
         }
 
-        public DateTime Date
-        {
-            get
-            {
-                return (int.Parse(datetime)).ToDateTime();
-            }
-        }
-
-        public float Value
-        {
-            get
-            {
-                return val.ToFloat();
-            }
-        }
-
-        public Quality Qual
-        {
-            get
-            {
-                return (Quality)int.Parse(quality);
-            }
-        }
-
-        public override string ToString()
-        {
-            return Date.ToString("dd.MM.yyyy HH:mm:ss") + " " + Value.ToString();
-        }
-
+        public Quality Quality => (Quality)int.Parse(_quality);
     }
 }

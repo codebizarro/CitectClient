@@ -168,7 +168,7 @@ namespace System.Net.CitectClient
 
         public IEnumerable<TrendEntry> TrendRead(string tag, DateTime dateRight, int length)
         {
-            var query = CtApiTrend.Query(tag, dateRight, GetSamplePeriod(tag), length);
+            var query = TrendHelper.Query(tag, dateRight, GetSamplePeriod(tag), length);
             var list = new List<TrendEntry>();
             var hFind = FindFirst(query, null, out uint obj);
             while (hFind != 0)
@@ -198,7 +198,7 @@ namespace System.Net.CitectClient
 
         public IEnumerable<TrendEntryQual> TrendRead(string tag, DateTime dateRight, int length, bool interpolate, bool legacy = true)
         {
-            var query = CtApiTrend.Query(tag, dateRight, GetSamplePeriod(tag), length, interpolate, legacy);
+            var query = TrendHelper.Query(tag, dateRight, GetSamplePeriod(tag), length, interpolate, legacy);
             var list = new List<TrendEntryQual>();
             var hFind = FindFirst(query, null, out uint obj);
             while (hFind != 0)
