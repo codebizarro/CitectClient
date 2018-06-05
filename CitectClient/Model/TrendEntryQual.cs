@@ -13,6 +13,6 @@
             _dateTime = (int.Parse(datetime)).ToDateTime();
         }
 
-        public Quality Quality => (Quality)int.Parse(_quality);
+        public QualityEnum Quality => (QualityEnum)int.Parse(_quality);
     }
 }

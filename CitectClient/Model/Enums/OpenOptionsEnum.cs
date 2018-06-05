@@ -1,6 +1,6 @@
 ﻿namespace System.Net.CitectClient
 {
-    public static class OpenOptions
+    public static class OpenOptionsEnum
     {
         public const int CT_OPEN_CRYPT = 0x00000001; /* use encryption */
         public const int CT_OPEN_RECONNECT = 0x00000002; /* reconnect on failure */

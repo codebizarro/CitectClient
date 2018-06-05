@@ -152,7 +152,7 @@ namespace System.Net.CitectClient
             var hFind = FindFirst(Tables.Trend.TableName, tag, out uint obj);
             if (hFind > 0)
             {
-                var s = GetProperty(obj, Tables.Trend.SAMPLEPER, DbType.DBTYPE_STR);
+                var s = GetProperty(obj, Tables.Trend.SAMPLEPER, DbTypeEnum.DBTYPE_STR);
                 return (int)s.ToFloat();
             }
             else return 0;
@@ -173,9 +173,9 @@ namespace System.Net.CitectClient
             var hFind = FindFirst(query, null, out uint obj);
             while (hFind != 0)
             {
-                var date = GetProperty(obj, "DATE", DbType.DBTYPE_STR);
-                var time = GetProperty(obj, "TIME", DbType.DBTYPE_STR);
-                var val = GetProperty(obj, tag, DbType.DBTYPE_STR);
+                var date = GetProperty(obj, "DATE", DbTypeEnum.DBTYPE_STR);
+                var time = GetProperty(obj, "TIME", DbTypeEnum.DBTYPE_STR);
+                var val = GetProperty(obj, tag, DbTypeEnum.DBTYPE_STR);
                 var entry = new TrendEntry(date, time, val);
                 list.Add(entry);
                 if (FindNext(hFind, out obj) == 0)
@@ -203,9 +203,9 @@ namespace System.Net.CitectClient
             var hFind = FindFirst(query, null, out uint obj);
             while (hFind != 0)
             {
-                var datetime = GetProperty(obj, "DateTime", DbType.DBTYPE_STR);
-                var val = GetProperty(obj, "Value", DbType.DBTYPE_STR);
-                var quality = GetProperty(obj, "Quality", DbType.DBTYPE_STR);
+                var datetime = GetProperty(obj, "DateTime", DbTypeEnum.DBTYPE_STR);
+                var val = GetProperty(obj, "Value", DbTypeEnum.DBTYPE_STR);
+                var quality = GetProperty(obj, "Quality", DbTypeEnum.DBTYPE_STR);
                 var entry = new TrendEntryQual(datetime, val, quality);
                 list.Add(entry);
                 if (FindNext(hFind, out obj) == 0)
