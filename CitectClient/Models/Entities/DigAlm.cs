@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace System.Net.CitectClient.Entities
+namespace System.Net.CitectClient
 {
     public static partial class CitectEntities
     {

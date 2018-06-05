@@ -175,12 +175,12 @@ namespace CitectClientTest
                 ArrayList lst = new ArrayList();
                 do
                 {
-                    string tag = _api.GetProperty(obj, "Tag", DbTypeEnum.DBTYPE_STR);
-                    string s = _api.GetProperty(obj, "FullName", DbTypeEnum.DBTYPE_STR);
-                    string comment = _api.GetProperty(obj, "Comment", DbTypeEnum.DBTYPE_STR);
-                    string add = tag + " - " + s + " - " + comment;
+                    string tag = _api.GetProperty(obj, CitectEntities.Trend.TAG, DbTypeEnum.DBTYPE_STR);
+                    //string s = _api.GetProperty(obj, CitectEntities.Tag.FullName, DbTypeEnum.DBTYPE_STR);
+                    string comment = _api.GetProperty(obj, CitectEntities.Trend.COMMENT, DbTypeEnum.DBTYPE_STR);
+                    string add = tag + " - " + /*s + " - " + */comment;
                     lst.Add(add);
-                    Debug = add;
+                    //Debug = add;
 
                 } while (_api.FindNext(hFind, out obj) != 0);
 
@@ -205,11 +205,11 @@ namespace CitectClientTest
                 ArrayList lst = new ArrayList();
                 do
                 {
-                    string tag = _api.GetProperty(obj, "TAG", DbTypeEnum.DBTYPE_STR);
-                    string s = _api.GetProperty(obj, "SAMPLEPER", DbTypeEnum.DBTYPE_STR);
-                    string name = _api.GetProperty(obj, "NAME", DbTypeEnum.DBTYPE_STR);
-                    string comment = _api.GetProperty(obj, "COMMENT", DbTypeEnum.DBTYPE_STR);
-                    string add = tag + " - " + name + " - " + s + " - " + comment;
+                    string tag = _api.GetProperty(obj, CitectEntities.Trend.TAG, DbTypeEnum.DBTYPE_STR);
+                    string s = _api.GetProperty(obj, CitectEntities.Trend.SAMPLEPER, DbTypeEnum.DBTYPE_STR);
+                    string name = _api.GetProperty(obj, CitectEntities.Trend.NAME, DbTypeEnum.DBTYPE_STR);
+                    string comment = _api.GetProperty(obj, CitectEntities.Trend.COMMENT, DbTypeEnum.DBTYPE_STR);
+                    string add = $"{tag} - {name} - {s} - {comment}";
                     lst.Add(add);
                     Debug = add;
                 } while (_api.FindNext(hFind, out obj) != 0);
@@ -248,8 +248,7 @@ namespace CitectClientTest
                 sb.AppendLine("date2;val2;date4;val4");
                 foreach (var el in all)
                 {
-                    string s = string.Format("{0};{1};{2};{3}",
-                        el.a.Date, el.b.Value, el.b.Date.ToString("HH:mm:ss"), el.b.Value);
+                    string s = $"{el.a.Date};{el.b.Value};{el.b.Date.ToString("HH: mm:ss")};{el.b.Value}";
                     sb.AppendLine(s);
                 }
                 string ret = sb.ToString();
