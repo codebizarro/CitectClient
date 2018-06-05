@@ -209,7 +209,97 @@ namespace CitectClientTest
                     string s = _api.GetProperty(obj, CitectEntities.Trend.SAMPLEPER, DbTypeEnum.DBTYPE_STR);
                     string name = _api.GetProperty(obj, CitectEntities.Trend.NAME, DbTypeEnum.DBTYPE_STR);
                     string comment = _api.GetProperty(obj, CitectEntities.Trend.COMMENT, DbTypeEnum.DBTYPE_STR);
-                    string add = $"{tag} - {name} - {s} - {comment}";
+                    string add = $"{tag} - {s} - {name} - {comment}";
+                    lst.Add(add);
+                    Debug = add;
+                } while (_api.FindNext(hFind, out obj) != 0);
+
+                int closeRet = _api.FindClose(hFind);
+                Assert.IsTrue(closeRet != 0);
+                _api.Close();
+                Assert.IsFalse(_api.Connected);
+            }
+        }
+
+        [TestMethod]
+        public void GetAllDigAlarms()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(_api.Connected);
+                _api.Open();
+                Assert.IsTrue(_api.Connected);
+                uint obj;
+                int hFind = _api.FindFirst(CitectEntities.DigAlm.TableName, "*", out obj);
+                Assert.IsTrue(hFind > 0);
+                ArrayList lst = new ArrayList();
+                do
+                {
+                    string tag = _api.GetProperty(obj, CitectEntities.DigAlm.TAG, DbTypeEnum.DBTYPE_STR);
+                    string s = _api.GetProperty(obj, CitectEntities.DigAlm.STATE, DbTypeEnum.DBTYPE_STR);
+                    string name = _api.GetProperty(obj, CitectEntities.DigAlm.NAME, DbTypeEnum.DBTYPE_STR);
+                    string comment = _api.GetProperty(obj, CitectEntities.DigAlm.DESC, DbTypeEnum.DBTYPE_STR);
+                    string add = $"{tag}  - {s} - {name} - {comment}";
+                    lst.Add(add);
+                    Debug = add;
+                } while (_api.FindNext(hFind, out obj) != 0);
+
+                int closeRet = _api.FindClose(hFind);
+                Assert.IsTrue(closeRet != 0);
+                _api.Close();
+                Assert.IsFalse(_api.Connected);
+            }
+        }
+
+        [TestMethod]
+        public void GetAllAnaAlarms()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(_api.Connected);
+                _api.Open();
+                Assert.IsTrue(_api.Connected);
+                uint obj;
+                int hFind = _api.FindFirst(CitectEntities.AnaAlm.TableName, "*", out obj);
+                Assert.IsTrue(hFind > 0);
+                ArrayList lst = new ArrayList();
+                do
+                {
+                    string tag = _api.GetProperty(obj, CitectEntities.AnaAlm.TAG, DbTypeEnum.DBTYPE_STR);
+                    string s = _api.GetProperty(obj, CitectEntities.AnaAlm.STATE, DbTypeEnum.DBTYPE_STR);
+                    string name = _api.GetProperty(obj, CitectEntities.AnaAlm.NAME, DbTypeEnum.DBTYPE_STR);
+                    string comment = _api.GetProperty(obj, CitectEntities.AnaAlm.DESC, DbTypeEnum.DBTYPE_STR);
+                    string add = $"{tag}  - {s} - {name} - {comment}";
+                    lst.Add(add);
+                    Debug = add;
+                } while (_api.FindNext(hFind, out obj) != 0);
+
+                int closeRet = _api.FindClose(hFind);
+                Assert.IsTrue(closeRet != 0);
+                _api.Close();
+                Assert.IsFalse(_api.Connected);
+            }
+        }
+
+        [TestMethod]
+        public void GetAllAdvAlarms()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(_api.Connected);
+                _api.Open();
+                Assert.IsTrue(_api.Connected);
+                uint obj;
+                int hFind = _api.FindFirst(CitectEntities.AdvAlm.TableName, "*", out obj);
+                Assert.IsTrue(hFind > 0);
+                ArrayList lst = new ArrayList();
+                do
+                {
+                    string tag = _api.GetProperty(obj, CitectEntities.AdvAlm.TAG, DbTypeEnum.DBTYPE_STR);
+                    //string s = _api.GetProperty(obj, CitectEntities.AdvAlm.STATE, DbTypeEnum.DBTYPE_STR);
+                    string name = _api.GetProperty(obj, CitectEntities.AdvAlm.NAME, DbTypeEnum.DBTYPE_STR);
+                    string comment = _api.GetProperty(obj, CitectEntities.AdvAlm.DESC, DbTypeEnum.DBTYPE_STR);
+                    string add = $"{tag} - {name} - {comment}";
                     lst.Add(add);
                     Debug = add;
                 } while (_api.FindNext(hFind, out obj) != 0);
