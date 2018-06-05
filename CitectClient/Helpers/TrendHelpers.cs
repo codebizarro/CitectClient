@@ -1,6 +1,6 @@
 ﻿namespace System.Net.CitectClient
 {
-    static class TrendHelper
+    static class TrendHelpers
     {
         public static string Query(string tag, DateTime datetime, int period, int length)
         {
