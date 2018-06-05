@@ -37,6 +37,7 @@
     <Compile Include="CitectClient.cs" />
     <Compile Include="Extensions\FloatExtensions.cs" />
     <Compile Include="ICitectClient.cs" />
+    <Compile Include="Model\BaseTrendEntry.cs" />
     <Compile Include="Model\Enums\Tables.cs" />
     <Compile Include="Model\Enums\OpenOptions.cs" />
     <Compile Include="Model\Enums\FindOptions.cs" />

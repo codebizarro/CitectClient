@@ -1,49 +1,23 @@
 ﻿namespace System.Net.CitectClient
 {
-    public class TrendEntry
+    public class TrendEntry: BaseTrendEntry
     {
-        string date;
-        string time;
-        string val;
+        private readonly string _date;
+        private readonly string _time;
 
-        public TrendEntry(string date, string time, string val)
+        public TrendEntry(string date, string time, string value): base(value)
         {
-            this.date = date.Trim();
-            this.time = time.Trim();
-            this.val = val.Trim();
+            _date = date.Trim();
+            _time = time.Trim();
+            _value = value.Trim();
+            _dateTime = DateTime.Parse($"{date} {time}");
         }
 
-        public TrendEntry(DateTime datetime, string val)
+        public TrendEntry(DateTime datetime, string value) : base(value)
         {
-            this.date = datetime.ToString("dd.MM.yyyy");
-            this.time = datetime.ToString("HH:mm:ss");
-            this.val = val.Trim();
-        }
-
-        public DateTime Date
-        {
-            get
-            {
-                return DateTime.Parse(date + " " + time);
-            }
-            //set
-            //{
-            //    date = value.ToString("dd.MM.yyyy");
-            //    time = value.ToString("HH:mm:ss");
-            //}
-        }
-
-        public float Value
-        {
-            get
-            {
-                return val.ToFloat();
-            }
-        }
-
-        public override string ToString()
-        {
-            return Date.ToString("dd.MM.yyyy HH:mm:ss") + " " + Value.ToString();
+            _date = datetime.ToString("dd.MM.yyyy");
+            _time = datetime.ToString("HH:mm:ss");
+            _value = value.Trim();
         }
     }
 }
