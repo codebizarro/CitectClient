@@ -149,10 +149,10 @@ namespace System.Net.CitectClient
 
         private int GetSamplePeriod(string tag)
         {
-            var hFind = FindFirst(Tables.Trend.TableName, tag, out uint obj);
+            var hFind = FindFirst(CitectEntities.Trend.TableName, tag, out uint obj);
             if (hFind > 0)
             {
-                var s = GetProperty(obj, Tables.Trend.SAMPLEPER, DbTypeEnum.DBTYPE_STR);
+                var s = GetProperty(obj, CitectEntities.Trend.SAMPLEPER, DbTypeEnum.DBTYPE_STR);
                 return (int)s.ToFloat();
             }
             else return 0;

@@ -2,7 +2,7 @@
 
 namespace System.Net.CitectClient
 {
-    public static class Tables
+    public static class CitectEntities
     {
         const string GET = "get_";
         public static class Tag
