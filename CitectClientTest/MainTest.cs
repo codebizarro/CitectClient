@@ -378,6 +378,22 @@ namespace CitectClientTest
         }
 
         [TestMethod]
+        public void AlarmReadAlmQUERY()
+        {
+            for (int i = 0; i < stressCount; ++i)
+            {
+                Assert.IsFalse(_api.Connected);
+                _api.Open();
+                Assert.IsTrue(_api.Connected);
+                DateTime endtime = _api.GetDateTime();
+                var res4 = _api.AlarmRead(CitectEntities.DigAlm.TableName, "L1_R311436FE_E", endtime.AddMinutes(-300), DateTime.Now, 3.0);
+                Assert.IsTrue(res4.Count() > 0);
+                _api.Close();
+                Assert.IsFalse(_api.Connected);
+            }
+        }
+
+        [TestMethod]
         public void GetStaticClassName()
         {
             Assert.IsTrue(CitectEntities.Trend.TableName == "Trend");

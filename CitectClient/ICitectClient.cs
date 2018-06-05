@@ -20,5 +20,6 @@ namespace System.Net.CitectClient
         IEnumerable<TrendEntryQual> TrendRead(string tag, DateTime dateRight, DateTime dateLeft, bool interpolate, bool legacy = true);
         IEnumerable<TrendEntry> TrendRead(string tag, DateTime dateRight, int length);
         IEnumerable<TrendEntryQual> TrendRead(string tag, DateTime dateRight, int length, bool interpolate, bool legacy = true);
+        IEnumerable<AlarmEntry> AlarmRead(string type, string tag, DateTime dateStart, DateTime dateEnd, double period);
     }
 }

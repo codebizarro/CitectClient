@@ -226,6 +226,30 @@ namespace System.Net.CitectClient
             var length = secondSpan / period;
             return TrendRead(tag, dateRight, (int)length, interpolate, legacy);
         }
+
+        public IEnumerable<AlarmEntry> AlarmRead(string type, string tag, DateTime dateStart, DateTime dateEnd, double period)
+        {
+            var query = AlarmHelpers.Query(type, tag, dateStart, dateEnd, period);
+
+            var list = new List<AlarmEntry>();
+            var hFind = FindFirst(query, null, out uint obj);
+            while (hFind != 0)
+            {
+                var datetime = GetProperty(obj, "DateTime", DbTypeEnum.DBTYPE_STR);
+                var mSeconds = GetProperty(obj, "MSeconds", DbTypeEnum.DBTYPE_STR);
+                var comment = GetProperty(obj, "Comment", DbTypeEnum.DBTYPE_STR);
+                var value = GetProperty(obj, "Value", DbTypeEnum.DBTYPE_STR);
+                var entry = new AlarmEntry(datetime, mSeconds, comment, value);
+                list.Add(entry);
+                if (FindNext(hFind, out obj) == 0)
+                {
+                    FindClose(hFind);
+                    hFind = 0;
+                    break;
+                }
+            }
+            return list;
+        }
         #endregion
 
         #region IDisposable
@@ -251,6 +275,8 @@ namespace System.Net.CitectClient
                 disposed = true;
             }
         }
+
+
 
         ~CitectClient()
         {
