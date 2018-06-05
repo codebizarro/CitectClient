@@ -119,7 +119,7 @@ namespace CitectClientTest
                 _api.Open();
                 Assert.IsTrue(_api.Connected);
                 uint obj;
-                int hFind = _api.FindFirst(Tables.Trend.TableName, "*", out obj);
+                int hFind = _api.FindFirst(CitectEntities.Trend.TableName, "*", out obj);
                 Assert.IsTrue(hFind > 0);
                 int closeRet = _api.FindClose(hFind);
                 Assert.IsTrue(closeRet != 0);
@@ -137,7 +137,7 @@ namespace CitectClientTest
                 _api.Open();
                 Assert.IsTrue(_api.Connected);
                 uint obj, obj1, obj2;
-                int hFind = _api.FindFirst(Tables.Trend.TableName, "*", out obj);
+                int hFind = _api.FindFirst(CitectEntities.Trend.TableName, "*", out obj);
                 Assert.IsTrue(hFind > 0);
                 _api.FindScroll(hFind, FindOptionsEnum.CT_FIND_SCROLL_LAST, 0, out obj1);
                 _api.FindScroll(hFind, FindOptionsEnum.CT_FIND_SCROLL_FIRST, 0, out obj2);
@@ -170,7 +170,7 @@ namespace CitectClientTest
                 _api.Open();
                 Assert.IsTrue(_api.Connected);
                 uint obj;
-                int hFind = _api.FindFirst(Tables.Tag.TableName, "*", out obj);
+                int hFind = _api.FindFirst(CitectEntities.Tag.TableName, "*", out obj);
                 Assert.IsTrue(hFind > 0);
                 ArrayList lst = new ArrayList();
                 do
@@ -200,7 +200,7 @@ namespace CitectClientTest
                 _api.Open();
                 Assert.IsTrue(_api.Connected);
                 uint obj;
-                int hFind = _api.FindFirst(Tables.Trend.TableName, "*", out obj);
+                int hFind = _api.FindFirst(CitectEntities.Trend.TableName, "*", out obj);
                 Assert.IsTrue(hFind > 0);
                 ArrayList lst = new ArrayList();
                 do
@@ -291,9 +291,9 @@ namespace CitectClientTest
         [TestMethod]
         public void GetStaticClassName()
         {
-            Assert.IsTrue(Tables.Trend.TableName == "Trend");
-            Assert.IsTrue(Tables.Trend.CLUSTER == "CLUSTER");
-            Assert.IsTrue(Tables.Trend.NAME == "NAME");
+            Assert.IsTrue(CitectEntities.Trend.TableName == "Trend");
+            Assert.IsTrue(CitectEntities.Trend.CLUSTER == "CLUSTER");
+            Assert.IsTrue(CitectEntities.Trend.NAME == "NAME");
         }
 
         //[TestMethod]
@@ -305,7 +305,7 @@ namespace CitectClientTest
                 _api.Open();
                 Assert.IsTrue(_api.Connected);
                 uint obj;
-                int hFind = _api.FindFirst(Tables.Trend.TableName, "*", out obj);
+                int hFind = _api.FindFirst(CitectEntities.Trend.TableName, "*", out obj);
                 Assert.IsTrue(hFind > 0);
                 ArrayList lst = new ArrayList();
                 do
@@ -313,7 +313,7 @@ namespace CitectClientTest
                     string tag = _api.GetProperty(obj, "TAG", DbTypeEnum.DBTYPE_STR);
                     string trendComment = _api.GetProperty(obj, "COMMENT", DbTypeEnum.DBTYPE_STR);
                     uint tobj;
-                    int tFind = _api.FindFirst(Tables.Tag.TableName, tag, out tobj);
+                    int tFind = _api.FindFirst(CitectEntities.Tag.TableName, tag, out tobj);
                     if (tobj > 0)
                     {
                         string tagComment = _api.GetProperty(tobj, "COMMENT", DbTypeEnum.DBTYPE_STR);
