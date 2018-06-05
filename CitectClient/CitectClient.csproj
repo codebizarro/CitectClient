@@ -37,19 +37,19 @@
     <Compile Include="CitectClient.cs" />
     <Compile Include="Extensions\FloatExtensions.cs" />
     <Compile Include="ICitectClient.cs" />
-    <Compile Include="Model\BaseTrendEntry.cs" />
-    <Compile Include="Model\Tables.cs" />
-    <Compile Include="Model\Enums\OpenOptionsEnum.cs" />
-    <Compile Include="Model\Enums\FindOptionsEnum.cs" />
-    <Compile Include="Model\Enums\DbTypeEnum.cs" />
-    <Compile Include="Model\Enums\QualityEnum.cs" />
+    <Compile Include="Models\BaseTrendEntry.cs" />
+    <Compile Include="Models\Tables.cs" />
+    <Compile Include="Models\Enums\OpenOptionsEnum.cs" />
+    <Compile Include="Models\Enums\FindOptionsEnum.cs" />
+    <Compile Include="Models\Enums\DbTypeEnum.cs" />
+    <Compile Include="Models\Enums\QualityEnum.cs" />
     <Compile Include="Exceptions\TimeoutException.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Helpers\Helpers.cs" />
-    <Compile Include="Model\TrendEntryQual.cs" />
+    <Compile Include="Models\TrendEntryQual.cs" />
     <Compile Include="Native.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\TrendEntry.cs" />
+    <Compile Include="Models\TrendEntry.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
