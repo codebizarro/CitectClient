@@ -139,20 +139,20 @@ namespace CitectClientTest
                 uint obj, obj1, obj2;
                 int hFind = _api.FindFirst(Tables.Trend.TableName, "*", out obj);
                 Assert.IsTrue(hFind > 0);
-                _api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_LAST, 0, out obj1);
-                _api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_FIRST, 0, out obj2);
-                _api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_LAST, 0, out obj2);
+                _api.FindScroll(hFind, FindOptionsEnum.CT_FIND_SCROLL_LAST, 0, out obj1);
+                _api.FindScroll(hFind, FindOptionsEnum.CT_FIND_SCROLL_FIRST, 0, out obj2);
+                _api.FindScroll(hFind, FindOptionsEnum.CT_FIND_SCROLL_LAST, 0, out obj2);
                 Assert.AreEqual(obj1, obj2);
-                _api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_PREV, 0, out obj1);
-                _api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_PREV, 0, out obj2);
-                _api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_NEXT, 0, out obj2);
+                _api.FindScroll(hFind, FindOptionsEnum.CT_FIND_SCROLL_PREV, 0, out obj1);
+                _api.FindScroll(hFind, FindOptionsEnum.CT_FIND_SCROLL_PREV, 0, out obj2);
+                _api.FindScroll(hFind, FindOptionsEnum.CT_FIND_SCROLL_NEXT, 0, out obj2);
                 Assert.AreEqual(obj1, obj2);
-                _api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_RELATIVE, -1, out obj1);
-                _api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_RELATIVE, -1, out obj2);
-                _api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_RELATIVE, 1, out obj2);
+                _api.FindScroll(hFind, FindOptionsEnum.CT_FIND_SCROLL_RELATIVE, -1, out obj1);
+                _api.FindScroll(hFind, FindOptionsEnum.CT_FIND_SCROLL_RELATIVE, -1, out obj2);
+                _api.FindScroll(hFind, FindOptionsEnum.CT_FIND_SCROLL_RELATIVE, 1, out obj2);
                 Assert.AreEqual(obj1, obj2);
-                _api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_ABSOLUTE, 2, out obj1);
-                _api.FindScroll(hFind, FindOptions.CT_FIND_SCROLL_ABSOLUTE, 2, out obj2);
+                _api.FindScroll(hFind, FindOptionsEnum.CT_FIND_SCROLL_ABSOLUTE, 2, out obj1);
+                _api.FindScroll(hFind, FindOptionsEnum.CT_FIND_SCROLL_ABSOLUTE, 2, out obj2);
                 Assert.AreEqual(obj1, obj2);
                 int closeRet = _api.FindClose(hFind);
                 Assert.IsTrue(closeRet != 0);
@@ -175,9 +175,9 @@ namespace CitectClientTest
                 ArrayList lst = new ArrayList();
                 do
                 {
-                    string tag = _api.GetProperty(obj, "Tag", DbType.DBTYPE_STR);
-                    string s = _api.GetProperty(obj, "FullName", DbType.DBTYPE_STR);
-                    string comment = _api.GetProperty(obj, "Comment", DbType.DBTYPE_STR);
+                    string tag = _api.GetProperty(obj, "Tag", DbTypeEnum.DBTYPE_STR);
+                    string s = _api.GetProperty(obj, "FullName", DbTypeEnum.DBTYPE_STR);
+                    string comment = _api.GetProperty(obj, "Comment", DbTypeEnum.DBTYPE_STR);
                     string add = tag + " - " + s + " - " + comment;
                     lst.Add(add);
                     Debug = add;
@@ -205,10 +205,10 @@ namespace CitectClientTest
                 ArrayList lst = new ArrayList();
                 do
                 {
-                    string tag = _api.GetProperty(obj, "TAG", DbType.DBTYPE_STR);
-                    string s = _api.GetProperty(obj, "SAMPLEPER", DbType.DBTYPE_STR);
-                    string name = _api.GetProperty(obj, "NAME", DbType.DBTYPE_STR);
-                    string comment = _api.GetProperty(obj, "COMMENT", DbType.DBTYPE_STR);
+                    string tag = _api.GetProperty(obj, "TAG", DbTypeEnum.DBTYPE_STR);
+                    string s = _api.GetProperty(obj, "SAMPLEPER", DbTypeEnum.DBTYPE_STR);
+                    string name = _api.GetProperty(obj, "NAME", DbTypeEnum.DBTYPE_STR);
+                    string comment = _api.GetProperty(obj, "COMMENT", DbTypeEnum.DBTYPE_STR);
                     string add = tag + " - " + name + " - " + s + " - " + comment;
                     lst.Add(add);
                     Debug = add;
@@ -310,13 +310,13 @@ namespace CitectClientTest
                 ArrayList lst = new ArrayList();
                 do
                 {
-                    string tag = _api.GetProperty(obj, "TAG", DbType.DBTYPE_STR);
-                    string trendComment = _api.GetProperty(obj, "COMMENT", DbType.DBTYPE_STR);
+                    string tag = _api.GetProperty(obj, "TAG", DbTypeEnum.DBTYPE_STR);
+                    string trendComment = _api.GetProperty(obj, "COMMENT", DbTypeEnum.DBTYPE_STR);
                     uint tobj;
                     int tFind = _api.FindFirst(Tables.Tag.TableName, tag, out tobj);
                     if (tobj > 0)
                     {
-                        string tagComment = _api.GetProperty(tobj, "COMMENT", DbType.DBTYPE_STR);
+                        string tagComment = _api.GetProperty(tobj, "COMMENT", DbTypeEnum.DBTYPE_STR);
                         Assert.AreEqual(trendComment, tagComment);
                     }
 

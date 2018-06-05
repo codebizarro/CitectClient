@@ -1,7 +1,7 @@
 ﻿namespace System.Net.CitectClient
 {
     [Flags]
-    public enum Quality
+    public enum QualityEnum
     {
         None = 0x1,
         Interpolated = 0x2,

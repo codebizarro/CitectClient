@@ -38,11 +38,11 @@
     <Compile Include="Extensions\FloatExtensions.cs" />
     <Compile Include="ICitectClient.cs" />
     <Compile Include="Model\BaseTrendEntry.cs" />
-    <Compile Include="Model\Enums\Tables.cs" />
-    <Compile Include="Model\Enums\OpenOptions.cs" />
-    <Compile Include="Model\Enums\FindOptions.cs" />
-    <Compile Include="Model\Enums\DbType.cs" />
-    <Compile Include="Model\Enums\Quality.cs" />
+    <Compile Include="Model\Tables.cs" />
+    <Compile Include="Model\Enums\OpenOptionsEnum.cs" />
+    <Compile Include="Model\Enums\FindOptionsEnum.cs" />
+    <Compile Include="Model\Enums\DbTypeEnum.cs" />
+    <Compile Include="Model\Enums\QualityEnum.cs" />
     <Compile Include="Exceptions\TimeoutException.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Helpers\Helpers.cs" />

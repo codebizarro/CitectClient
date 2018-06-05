@@ -1,6 +1,6 @@
 ﻿namespace System.Net.CitectClient
 {
-    public static class DbType
+    public static class DbTypeEnum
     {
         public const int DBTYPE_EMPTY = 0;
         public const int DBTYPE_NULL = 1;

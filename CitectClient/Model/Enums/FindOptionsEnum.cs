@@ -1,6 +1,6 @@
 ﻿namespace System.Net.CitectClient
 {
-    public static class FindOptions
+    public static class FindOptionsEnum
     {
         public const uint CT_FIND_SCROLL_NEXT = 0x00000001; /* scroll to next record	*/
         public const uint CT_FIND_SCROLL_PREV = 0x00000002; /* scroll to prev record	*/
