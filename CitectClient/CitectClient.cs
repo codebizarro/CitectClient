@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Net.CitectClient.Platform;
+using System.Net.CitectClient.Entities;
 
 namespace System.Net.CitectClient
 {
