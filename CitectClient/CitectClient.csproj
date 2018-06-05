@@ -36,7 +36,10 @@
   <ItemGroup>
     <Compile Include="CitectClient.cs" />
     <Compile Include="Extensions\FloatExtensions.cs" />
+    <Compile Include="Helpers\AlarmHelpers.cs" />
     <Compile Include="ICitectClient.cs" />
+    <Compile Include="Models\AlarmEntry.cs" />
+    <Compile Include="Models\BaseEntry.cs" />
     <Compile Include="Models\BaseTrendEntry.cs" />
     <Compile Include="Models\Entities\Accum.cs" />
     <Compile Include="Models\Entities\AdvAlm.cs" />
